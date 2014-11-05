@@ -17,10 +17,6 @@
 #import "AppDelegate.h"
 #import "PixivAPI.h"
 
-//#define __DISABLE_R18
-#define _USERNAME @"grave1"
-#define _PASSWORD @"6654321"
-
 @interface RankingLogWaterfallViewController ()
 @property (nonatomic) NSInteger currentPage;
 @end
@@ -60,8 +56,6 @@
     
     [ModelSettings sharedInstance].isChanged = NO;
     self.currentPage = 0;
-    
-    //self.illusts = @[];
 }
 
 - (NSArray *)fetchNextRankingLog
@@ -73,14 +67,10 @@
     NSCalendarUnit flags = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear;
     NSDateComponents *components = [[NSCalendar currentCalendar] components:flags fromDate:[ModelSettings sharedInstance].date];
 
-#ifndef __DISABLE_R18
+
     NSArray *illusts = [[PixivAPI sharedInstance] SAPI_ranking_log:[components year] month:[components month] day:[components day]
                                                   mode:mode page:self.currentPage requireAuth:YES];
-#else
-    NSArray *illusts = [[PixivAPI sharedInstance] SAPI_ranking_log:[components year] month:[components month] day:[components day]
-                                                  mode:mode page:self.currentPage requireAuth:NO];
-#endif
-    
+
     NSLog(@"get RankingLog(%@, %ld-%ld-%ld, page=%ld) return %ld works", mode, (long)[components year], (long)[components month], (long)[components day], (long)self.currentPage, (long)illusts.count);
     
     if ((illusts.count == 0) ||     // 已经更多数据或出错
@@ -115,7 +105,6 @@
     self.illusts = @[];
     self.currentPage = 0;
     
-#ifndef __DISABLE_R18
     __weak RankingLogWaterfallViewController *weakSelf = self;
     
     [SVProgressHUD showWithStatus:@"Login..." maskType:SVProgressHUDMaskTypeBlack];
@@ -135,9 +124,6 @@
             [weakSelf asyncGetRankingLog];
         }];
     }];
-#else
-    [self asyncGetRankingLog];
-#endif
 }
 
 - (void)viewDidLoad
@@ -153,9 +139,7 @@
         [self loginAndRefreshView];
     }
     
-#ifndef __DISABLE_R18
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
-#endif
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -172,13 +156,11 @@
     
     [self updateTitle];
     
-#ifndef __DISABLE_R18
     if ([[ModelSettings sharedInstance].mode rangeOfString:@"r18"].location != NSNotFound) {
         [self.navigationItem.leftBarButtonItem setEnabled:YES];
     } else {
         [self.navigationItem.leftBarButtonItem setEnabled:NO];
     }
-#endif
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -198,9 +180,7 @@
             // modeArray for RankingLog
             dpvc.modeArray = @[
                 @"daily", @"weekly", @"monthly", @"male", @"female", @"rookie",
-#ifndef __DISABLE_R18
                 @"daily_r18", @"weekly_r18", @"male_r18", @"female_r18", @"r18g",
-#endif
             ];
         }
         
