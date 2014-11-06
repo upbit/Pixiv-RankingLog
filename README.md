@@ -1,11 +1,11 @@
 P站过去排行扫图专用App - Pixiv RankingLog for iOS
 ================
 
+**下载：**[RankingLog_v1.2.ipa](http://blog.imaou.com/RankingLog/RankingLog_v1.2.ipa) - (通用版，支持iOS6.1~iOS8.1，需越狱)
+
 使用说明:
 
 ![RankingLog Helper](https://raw.github.com/upbit/Pixiv-RankingLog/master/RankingLogHelper.png)
-
-<span style="color:#f00;"><b>下载：</b></span>[RankingLog_v1.2.ipa](http://blog.imaou.com/RankingLog/RankingLog_v1.2.ipa)
 
 ## 主要功能
 
@@ -14,7 +14,7 @@ P站过去排行扫图专用App - Pixiv RankingLog for iOS
 3. 支持查看同作者的其他作品；_v1.1新增_
 4. 支持收藏到Pixiv，并可以查看帐号的公开收藏；_v1.2新增_
 
-更多功能，请下载体验 :P
+更多功能，自己下载体验吧 :P
 
 ## ChangeLogs
 
