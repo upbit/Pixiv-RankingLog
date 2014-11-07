@@ -52,41 +52,26 @@
     return NO;
 }
 
-// override for progress
-- (void)realShowImageWithBaseInfo:(NSDictionary *)illust_record
+- (void)onImageProgress:(NSInteger)receivedSize expectedSize:(NSInteger)expectedSize
 {
-    NSInteger illust_id = [illust_record[@"illust_id"] integerValue];
-    NSString *image_url = illust_record[@"image_url"];
-    NSString *title = illust_record[@"title"];
-    self.navigationItem.title = illust_record[@"title"];
-    
-    NSLog(@"download(%@, id=%ld): %@", title, (long)illust_id, image_url);
-    
-    [self simulatePixivRefererAndUserAgent:illust_id];
-    
-    __weak PixivDetailScrollImageViewController *weakSelf = self;
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:image_url]
-                      placeholderImage:self.preloadImageView.image options:(SDWebImageHighPriority|SDWebImageRetryFailed)
-                              progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                  //NSLog(@"download id=%ld: %.1f%%", (long)illust_id, (float)receivedSize/expectedSize*100);
-                                  [[weakSelf _embedViewController] updateDownloadProgress:(float)receivedSize/expectedSize];
-                              }
-                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                 if (error) {
-                                     NSLog(@"download(%@, id=%ld) error: %@", title, (long)illust_id, error);
-                                 } else {
-                                     NSLog(@"download(%@, id=%ld) completed.", title, (long)illust_id);
-                                 }
-                                 
-                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                     [weakSelf onImageDownloaded:image];
-                                     // hide progress bar
-                                     [[weakSelf _embedViewController] updateDownloadProgress:-1.0];
-                                 });
-                             }];
+    //NSLog(@"download id=%ld: %.1f%%", (long)illust_id, (float)receivedSize/expectedSize*100);
+    [[self _embedViewController] updateDownloadProgress:(float)receivedSize/expectedSize];
+}
+
+- (void)onImageDownloaded:(UIImage *)image
+{
+    [super onImageDownloaded:image];
+    // hide progress bar
+    [[self _embedViewController] updateDownloadProgress:-1.0];
 }
 
 // override for progress
+- (void)realShowImageWithBaseInfo:(NSDictionary *)illust_record
+{
+    self.navigationItem.title = illust_record[@"title"];
+    [super realShowImageWithBaseInfo:illust_record];
+}
+
 - (void)preloadImageWithBaseInfo:(NSDictionary *)illust_record index:(NSInteger)index
 {
     NSInteger illust_id = [illust_record[@"illust_id"] integerValue];

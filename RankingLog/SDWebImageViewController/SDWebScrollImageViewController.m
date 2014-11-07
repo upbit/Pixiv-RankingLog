@@ -24,12 +24,6 @@
     }
 }
 
-- (UIImageView *)preloadImageView
-{
-    if (!_preloadImageView) _preloadImageView = [[UIImageView alloc] init];
-    return _preloadImageView;
-}
-
 #pragma mark - View Controller
 
 - (void)viewDidLoad
@@ -38,9 +32,6 @@
 
     [SDWebImageManager.sharedManager.imageDownloader setValue:@"PixivIOSApp/5.1.1" forHTTPHeaderField:@"User-Agent"];
     SDWebImageManager.sharedManager.imageDownloader.executionOrder = SDWebImageDownloaderLIFOExecutionOrder;
-    
-    [self.preloadImageView setHidden:YES];
-    [self.scrollView addSubview:self.preloadImageView];
     
     // single/double tap gesture
     UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
@@ -117,6 +108,13 @@
     return [self _safeGetIllustBaseInfo:self.illusts index:index largeSize:self.showLargeSize];
 }
 
+// 图片下载进度通知
+- (void)onImageProgress:(NSInteger)receivedSize expectedSize:(NSInteger)expectedSize
+{
+    //NSLog(@"download progress: %.2f%%", (float)receivedSize/expectedSize);
+}
+
+// 图片下载完成的回掉函数，供外部感知下载结束
 - (void)onImageDownloaded:(UIImage *)image
 {
     self.image = image;
@@ -126,9 +124,8 @@
 {
     NSInteger illust_id = [illust_record[@"illust_id"] integerValue];
     NSString *image_url = illust_record[@"image_url"];
-    NSString *title = illust_record[@"title"];
     
-    NSLog(@"download(%@, id=%ld): %@", title, (long)illust_id, image_url);
+    NSLog(@"download(id=%ld): %@", (long)illust_id, image_url);
     
     [self simulatePixivRefererAndUserAgent:illust_id];
     
@@ -136,12 +133,15 @@
     [ApplicationDelegate setNetworkActivityIndicatorVisible:YES];
     
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:image_url]
-                      placeholderImage:self.preloadImageView.image
+                      placeholderImage:nil options:(SDWebImageHighPriority|SDWebImageRetryFailed)
+                              progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                  [weakSelf onImageProgress:receivedSize expectedSize:expectedSize];
+                              }
                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                  if (error) {
-                                     NSLog(@"download(%@, id=%ld) error: %@", title, (long)illust_id, error);
+                                     NSLog(@"download(id=%ld) error: %@", (long)illust_id, error);
                                  } else {
-                                     NSLog(@"download(%@, id=%ld) completed.", title, (long)illust_id);
+                                     NSLog(@"download(id=%ld) completed.", (long)illust_id);
                                  }
                                  
                                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -150,7 +150,7 @@
                                  });
                              }];
 }
-
+/*
 - (void)preloadImageWithBaseInfo:(NSDictionary *)illust_record
 {
     NSInteger illust_id = [illust_record[@"illust_id"] integerValue];
@@ -168,7 +168,7 @@
                             NSLog(@" preload id=%ld: completed", (long)illust_id);
                         }];
 }
-
+*/
 - (void)reloadImage
 {
     NSDictionary *illust_record = [self illustRecordWithIndex:self.index];

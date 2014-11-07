@@ -26,10 +26,10 @@
     id raw_illust = [self.illusts firstObject];
     if ([raw_illust isKindOfClass:[SAPIIllust class]]) {
         SAPIIllust *illust = (SAPIIllust *)raw_illust;
-        author_title = [NSString stringWithFormat:@"%@(%@)", illust.authorName, illust.username];
+        author_title = [NSString stringWithFormat:@"%@(%ld)", illust.authorName, (long)illust.authorId];
     } else if ([raw_illust isKindOfClass:[PAPIIllust class]]) {
         PAPIIllust *illust = (PAPIIllust *)raw_illust;
-        author_title = [NSString stringWithFormat:@"%@(%@)", illust.name, illust.account];
+        author_title = [NSString stringWithFormat:@"%@(%ld)", illust.name, (long)illust.author_id];
     } else {
         return;
     }

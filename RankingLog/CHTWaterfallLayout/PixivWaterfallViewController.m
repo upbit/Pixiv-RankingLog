@@ -62,8 +62,6 @@
     
     //layout.headerHeight = 44;
     //[self.collectionView registerClass:[CHTCollectionViewHeader class] forSupplementaryViewOfKind:CHTCollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
-    
-    self.illusts = @[];
 }
 
 - (void)viewDidAppear:(BOOL)animated
