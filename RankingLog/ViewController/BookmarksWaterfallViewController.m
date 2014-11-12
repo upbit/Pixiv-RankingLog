@@ -112,7 +112,7 @@
 - (IBAction)randomIllustArray:(UIBarButtonItem *)sender
 {
     self.illusts = [self randomizedArray:self.illusts];
-    [self.collectionView reloadData];
+    [self reloadCollectionViewWithAnimated:YES];
 }
 
 @end

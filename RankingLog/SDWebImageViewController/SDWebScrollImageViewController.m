@@ -130,8 +130,6 @@
     [self simulatePixivRefererAndUserAgent:illust_id];
     
     __weak SDWebScrollImageViewController *weakSelf = self;
-    [ApplicationDelegate setNetworkActivityIndicatorVisible:YES];
-    
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:image_url]
                       placeholderImage:nil options:(SDWebImageHighPriority|SDWebImageRetryFailed)
                               progress:^(NSInteger receivedSize, NSInteger expectedSize) {
@@ -145,7 +143,6 @@
                                  }
                                  
                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                     [ApplicationDelegate setNetworkActivityIndicatorVisible:NO];
                                      [weakSelf onImageDownloaded:image];
                                  });
                              }];

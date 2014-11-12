@@ -12,6 +12,10 @@
 #import "CHTCollectionViewCell.h"
 
 @interface PixivWaterfallViewController : UICollectionViewController
+
 @property (strong, nonatomic) NSArray *illusts;
 - (NSInteger)safeGetIllustId:(NSInteger)index;
+
+- (void)reloadCollectionViewWithAnimated:(BOOL)animated;
+
 @end

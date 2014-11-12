@@ -41,7 +41,20 @@
     _illusts = illusts;
     NSLog(@"set illusts, count = %ld", (unsigned long)_illusts.count);
     
-    [self.collectionView reloadData];
+    [self reloadCollectionViewWithAnimated:NO];
+}
+
+// FIX BUG: http://stackoverflow.com/questions/19032869/uicollectionview-crash-on-unhighlightallitems
+- (void)reloadCollectionViewWithAnimated:(BOOL)animated
+{
+    [UIView setAnimationsEnabled:animated];
+    
+    __weak PixivWaterfallViewController *weakSelf = self;
+    [self.collectionView performBatchUpdates:^{
+        [weakSelf.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    } completion:^(BOOL finished) {
+        [UIView setAnimationsEnabled:YES];
+    }];
 }
 
 - (void)viewDidLoad
