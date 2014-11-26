@@ -7,6 +7,8 @@
 //
 
 #import "DatePickerViewController.h"
+#import <SDWebImage/SDImageCache.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "ModelSettings.h"
 
 @interface DatePickerViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
@@ -183,6 +185,16 @@
     [self.datePicker setDate:[ModelSettings sharedInstance].date animated:YES];
     
     [self updatePickerLabelWithChanges:self];
+}
+
+- (IBAction)clearSDWebDiskCache:(UIBarButtonItem *)sender
+{
+    [SVProgressHUD showWithStatus:@"Clear Cache..." maskType:SVProgressHUDMaskTypeBlack];
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    }];
 }
 
 @end

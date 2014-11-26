@@ -298,7 +298,13 @@
                             <action selector="dismissKeyboard:" destination="jn0-LR-wkC" eventType="touchDown" id="CMI-Xs-DRO"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="cDM-QA-emk"/>
+                    <navigationItem key="navigationItem" id="cDM-QA-emk">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="TD9-cb-9f6">
+                            <connections>
+                                <action selector="clearSDWebDiskCache:" destination="jn0-LR-wkC" id="6mk-UN-Aon"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="datePicker" destination="ABG-SW-htE" id="3RP-bf-uGw"/>
                         <outlet property="exportToDocumentSwitch" destination="TkE-9Y-0Av" id="CHy-TP-m07"/>
