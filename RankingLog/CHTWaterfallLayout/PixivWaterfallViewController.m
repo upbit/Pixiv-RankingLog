@@ -66,7 +66,7 @@
     layout.sectionInset = UIEdgeInsetsMake(5, 2, 5, 2);
     layout.minimumColumnSpacing = 1;
     layout.minimumInteritemSpacing = 1;
-    layout.columnCount = 3;
+    layout.columnCount = 4;
     
     self.collectionView.collectionViewLayout = layout;
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
