@@ -12,7 +12,7 @@
 
 // Cell的最小显示大小(决定列数)
 #define MIN_CELL_COLUMN_SIZE        (96)
-#define MIN_CELL_COLUMN_SIZE_IPAD   (150)
+#define MIN_CELL_COLUMN_SIZE_IPAD   (192)
 
 @interface PixivWaterfallViewController () <UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout>
 

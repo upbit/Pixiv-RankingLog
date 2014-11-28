@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="uN7-fv-fMT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="uN7-fv-fMT">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -93,6 +93,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0JG-sj-LIo">
+                                <rect key="frame" x="104" y="294" width="119" height="30"/>
+                                <state key="normal" title="Clear Bookmarks">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearBookmarkArray:" destination="jn0-LR-wkC" eventType="touchUpInside" id="4pJ-bG-Rn6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AqO-mK-RuO">
+                                <rect key="frame" x="371" y="294" width="133" height="30"/>
+                                <state key="normal" title="Clear Disk &amp; Cache">
+                                    <color key="titleColor" red="0.50196081399917603" green="0.0" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearSDWebDiskCache:" destination="jn0-LR-wkC" eventType="touchUpInside" id="vzc-Gf-esr"/>
+                                </connections>
+                            </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ABG-SW-htE">
                                 <rect key="frame" x="0.0" y="420" width="600" height="180"/>
                                 <constraints>
@@ -235,8 +255,8 @@
                             <constraint firstItem="TzX-KU-QVd" firstAttribute="top" secondItem="G1S-WX-naK" secondAttribute="bottom" constant="16" id="7fQ-is-34z">
                                 <variation key="widthClass=compact" constant="8"/>
                             </constraint>
-                            <constraint firstItem="D8K-0X-xSI" firstAttribute="top" secondItem="TzX-KU-QVd" secondAttribute="bottom" constant="8" id="7kb-tE-ibk"/>
                             <constraint firstAttribute="trailing" secondItem="kWZ-ZB-BPt" secondAttribute="trailing" id="AwC-Np-Xir"/>
+                            <constraint firstItem="qKt-ca-XXR" firstAttribute="centerX" secondItem="AqO-mK-RuO" secondAttribute="centerX" id="BJt-iQ-xvY"/>
                             <constraint firstItem="EuI-JE-y4B" firstAttribute="leading" secondItem="Q7g-a5-OPY" secondAttribute="trailing" constant="8" id="CNF-3U-8hW"/>
                             <constraint firstItem="54F-pQ-sdh" firstAttribute="baseline" secondItem="S6X-SD-PBO" secondAttribute="baseline" id="E2j-ui-oYT"/>
                             <constraint firstAttribute="trailing" secondItem="ABG-SW-htE" secondAttribute="trailing" id="EPB-bs-H2z"/>
@@ -248,11 +268,16 @@
                             <constraint firstItem="EuI-JE-y4B" firstAttribute="centerY" secondItem="Q7g-a5-OPY" secondAttribute="centerY" id="KyO-98-fAG"/>
                             <constraint firstAttribute="centerX" secondItem="TzX-KU-QVd" secondAttribute="centerX" id="Muj-xp-gFb"/>
                             <constraint firstItem="qKt-ca-XXR" firstAttribute="centerY" secondItem="TkE-9Y-0Av" secondAttribute="centerY" id="RFI-e7-UjK"/>
+                            <constraint firstItem="AqO-mK-RuO" firstAttribute="centerY" secondItem="0JG-sj-LIo" secondAttribute="centerY" id="S2C-HA-Wyh"/>
                             <constraint firstItem="zwA-A1-IOh" firstAttribute="top" secondItem="ABG-SW-htE" secondAttribute="bottom" id="UnL-cy-MMy"/>
+                            <constraint firstItem="0JG-sj-LIo" firstAttribute="top" secondItem="EuI-JE-y4B" secondAttribute="bottom" constant="32" id="YTO-mD-hQr">
+                                <variation key="widthClass=compact" constant="16"/>
+                            </constraint>
                             <constraint firstItem="kWZ-ZB-BPt" firstAttribute="leading" secondItem="sQ2-rt-jSg" secondAttribute="leading" id="a5y-HK-0fZ"/>
                             <constraint firstItem="L5I-o6-rp9" firstAttribute="leading" secondItem="sQ2-rt-jSg" secondAttribute="leading" constant="16" id="dVr-9y-rGf"/>
                             <constraint firstItem="S6X-SD-PBO" firstAttribute="leading" secondItem="54F-pQ-sdh" secondAttribute="trailing" constant="8" id="g3R-dc-0nA"/>
                             <constraint firstItem="ool-Wd-odc" firstAttribute="centerX" secondItem="TkE-9Y-0Av" secondAttribute="centerX" id="g8D-cj-73K"/>
+                            <constraint firstItem="0JG-sj-LIo" firstAttribute="centerX" secondItem="TkE-9Y-0Av" secondAttribute="centerX" id="h5M-Nb-eHs"/>
                             <constraint firstItem="qKt-ca-XXR" firstAttribute="leading" secondItem="D8K-0X-xSI" secondAttribute="trailing" constant="88" id="htf-vR-6LP">
                                 <variation key="widthClass=compact" constant="44"/>
                             </constraint>
@@ -272,13 +297,10 @@
                             <constraint firstItem="kWZ-ZB-BPt" firstAttribute="top" secondItem="yVl-RH-BZx" secondAttribute="bottom" constant="8" id="wAc-BH-KeP"/>
                             <constraint firstItem="EuI-JE-y4B" firstAttribute="top" secondItem="qKt-ca-XXR" secondAttribute="bottom" constant="8" id="yRn-0N-9Fg"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="7kb-tE-ibk"/>
-                            </mask>
-                        </variation>
                         <variation key="heightClass=compact">
                             <mask key="subviews">
+                                <exclude reference="0JG-sj-LIo"/>
+                                <exclude reference="AqO-mK-RuO"/>
                                 <exclude reference="D8K-0X-xSI"/>
                                 <exclude reference="ool-Wd-odc"/>
                                 <exclude reference="TzX-KU-QVd"/>
@@ -289,22 +311,13 @@
                                 <exclude reference="Q7g-a5-OPY"/>
                             </mask>
                         </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="constraints">
-                                <include reference="7kb-tE-ibk"/>
-                            </mask>
-                        </variation>
+                        <variation key="widthClass=compact"/>
+                        <variation key="heightClass=regular-widthClass=regular"/>
                         <connections>
                             <action selector="dismissKeyboard:" destination="jn0-LR-wkC" eventType="touchDown" id="CMI-Xs-DRO"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="cDM-QA-emk">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="TD9-cb-9f6">
-                            <connections>
-                                <action selector="clearSDWebDiskCache:" destination="jn0-LR-wkC" id="6mk-UN-Aon"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="cDM-QA-emk"/>
                     <connections>
                         <outlet property="datePicker" destination="ABG-SW-htE" id="3RP-bf-uGw"/>
                         <outlet property="exportToDocumentSwitch" destination="TkE-9Y-0Av" id="CHy-TP-m07"/>
@@ -830,6 +843,6 @@
         <image name="Star" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tZf-86-Ykk"/>
+        <segue reference="Q8l-gZ-8Hc"/>
     </inferredMetricsTieBreakers>
 </document>

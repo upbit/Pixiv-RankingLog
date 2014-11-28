@@ -187,9 +187,15 @@
     [self updatePickerLabelWithChanges:self];
 }
 
-- (IBAction)clearSDWebDiskCache:(UIBarButtonItem *)sender
+- (IBAction)clearBookmarkArray:(UIButton *)sender
 {
-    [SVProgressHUD showWithStatus:@"Clear Cache..." maskType:SVProgressHUDMaskTypeBlack];
+    [[ModelSettings sharedInstance] clearBookmarkArrayFromUserDefaults];
+    [SVProgressHUD showSuccessWithStatus:@"Clear Bookmarks success."];
+}
+
+- (IBAction)clearSDWebDiskCache:(UIButton *)sender
+{
+    [SVProgressHUD showWithStatus:@"Clear Cache, this may take a while..." maskType:SVProgressHUDMaskTypeBlack];
     [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];

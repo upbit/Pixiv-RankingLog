@@ -7,8 +7,10 @@
 //
 
 #import "ModelSettings.h"
+#import "PixivAPI.h"
 
 #define UD_RANKINGLOG_KEY           @"rankinglog"
+#define UD_RANKINGLOG_BOOKMARKS     @"rankinglog_bookmarks"
 #define DEFAULT_PIXIV_FETCH_PAGE    (3)
 
 @interface ModelSettings()
@@ -30,7 +32,6 @@
 - (instancetype)init
 {
     self = [super init];
-    
     if (self) {
         self.isChanged = NO;
     }
@@ -126,6 +127,109 @@
 - (void)clearSettingFromUserDefaults
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:UD_RANKINGLOG_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - NSUserDefaults bookmarks
+
+- (NSInteger)_safeGetAPIIllustId:(id)raw_illust
+{
+    if ([raw_illust isKindOfClass:[SAPIIllust class]]) {
+        SAPIIllust *illust = (SAPIIllust *)raw_illust;
+        return illust.illustId;
+    } else if ([raw_illust isKindOfClass:[PAPIIllust class]]) {
+        PAPIIllust *illust = (PAPIIllust *)raw_illust;
+        return illust.illust_id;
+    } else {
+        NSLog(@"Uknown illust type: %@", raw_illust);
+    }
+    return 0;
+}
+
+// NO - if illust already exist
+- (BOOL)insertBookmarkWithIllust:(id)illust atIndex:(NSUInteger)index
+{
+    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:[ModelSettings sharedInstance].bookmarkArray];
+    NSInteger new_illust_id = [self _safeGetAPIIllustId:illust];
+    
+    for (id bookmark_illust in bookmarks) {
+        NSInteger bookmark_illust_id = [self _safeGetAPIIllustId:bookmark_illust];
+        
+        if (new_illust_id == bookmark_illust_id) {
+            // already exist
+            return NO;
+        }
+    }
+    
+    NSLog(@"add local bookmark %ld", (long)new_illust_id);
+    [bookmarks insertObject:illust atIndex:index];
+    [ModelSettings sharedInstance].bookmarkArray = bookmarks;
+    return YES;
+}
+
+- (BOOL)addBookmarkWithIllust:(id)illust
+{
+    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:[ModelSettings sharedInstance].bookmarkArray];
+    NSInteger new_illust_id = [self _safeGetAPIIllustId:illust];
+    
+    for (id bookmark_illust in bookmarks) {
+        NSInteger bookmark_illust_id = [self _safeGetAPIIllustId:bookmark_illust];
+        
+        if (new_illust_id == bookmark_illust_id) {
+            // already exist
+            return NO;
+        }
+    }
+    
+    NSLog(@"add local bookmark %ld", (long)new_illust_id);
+    [bookmarks addObject:illust];
+    [ModelSettings sharedInstance].bookmarkArray = bookmarks;
+    return YES;
+}
+
+// YES - if remove illust success
+- (BOOL)removeBookmarkWithIllustId:(NSInteger)illust_id
+{
+    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:[ModelSettings sharedInstance].bookmarkArray];
+    
+    BOOL found = NO;
+    for (NSUInteger i = 0; i < bookmarks.count; i++) {
+        NSInteger bookmark_illust_id = [self _safeGetAPIIllustId:bookmarks[i]];
+        if (illust_id == bookmark_illust_id) {
+            // found
+            NSLog(@"remove local bookmark %ld", (long)bookmark_illust_id);
+            
+            [bookmarks removeObjectAtIndex:i];
+            found = YES;
+        }
+    }
+
+    if (found) {
+        [ModelSettings sharedInstance].bookmarkArray = bookmarks;
+    }
+    return found;
+}
+
+- (BOOL)loadBookmarkArrayFromUserDefaults {
+    NSData *bookmark_storage = [[NSUserDefaults standardUserDefaults] objectForKey:UD_RANKINGLOG_BOOKMARKS];
+    if (!bookmark_storage) {
+        return NO;
+    }
+    
+    self.bookmarkArray = [NSKeyedUnarchiver unarchiveObjectWithData:bookmark_storage];
+    return YES;
+}
+
+- (void)saveBookmarkArrayToUserDefaults {
+    NSData *bookmark_storage = [NSKeyedArchiver archivedDataWithRootObject:self.bookmarkArray];
+    [[NSUserDefaults standardUserDefaults] setObject:bookmark_storage forKey:UD_RANKINGLOG_BOOKMARKS];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)clearBookmarkArrayFromUserDefaults
+{
+    self.bookmarkArray = nil;
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:UD_RANKINGLOG_BOOKMARKS];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

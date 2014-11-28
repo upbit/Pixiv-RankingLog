@@ -22,6 +22,8 @@
 
 @property (nonatomic) NSInteger pageLimit;
 
+@property (strong, nonatomic) NSArray *bookmarkArray;        // of PAPI_illust
+
 + (ModelSettings *)sharedInstance;
 
 // 当前日期前移ago秒
@@ -30,5 +32,12 @@
 - (BOOL)loadSettingFromUserDefaults;
 - (void)saveSettingToUserDefaults;
 - (void)clearSettingFromUserDefaults;
+
+- (BOOL)insertBookmarkWithIllust:(id)illust atIndex:(NSUInteger)index;
+- (BOOL)addBookmarkWithIllust:(id)illust;
+- (BOOL)removeBookmarkWithIllustId:(NSInteger)illust_id;
+- (BOOL)loadBookmarkArrayFromUserDefaults;
+- (void)saveBookmarkArrayToUserDefaults;
+- (void)clearBookmarkArrayFromUserDefaults;
 
 @end

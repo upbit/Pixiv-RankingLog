@@ -11,6 +11,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 
 #import "PixivAPI.h"
+#import "ModelSettings.h"
 
 @interface DetailInfoContainerViewController ()
 
@@ -143,6 +144,11 @@
                         sender.imageView.image = [UIImage imageNamed:@"Star"];
                     }
                 }];
+                
+                // Insert new works to local bookmark
+                PAPIIllust *bookmarked = [[PixivAPI sharedInstance] PAPI_works:illust_id];
+                [[ModelSettings sharedInstance] insertBookmarkWithIllust:bookmarked atIndex:0];
+                [[ModelSettings sharedInstance] saveBookmarkArrayToUserDefaults];
             }];
             
         } else {
@@ -164,6 +170,10 @@
                         sender.imageView.image = [UIImage imageNamed:@"StarBlack"];
                     }
                 }];
+                
+                // del from local bookmark array
+                [[ModelSettings sharedInstance] removeBookmarkWithIllustId:illust_id];
+                [[ModelSettings sharedInstance] saveBookmarkArrayToUserDefaults];
             }];
             
         }
