@@ -34,6 +34,8 @@
     self = [super init];
     if (self) {
         self.isChanged = NO;
+        // init bookmarkArray
+        [self loadBookmarkArrayFromUserDefaults];
     }
     return self;
 }
@@ -149,7 +151,7 @@
 // NO - if illust already exist
 - (BOOL)insertBookmarkWithIllust:(id)illust atIndex:(NSUInteger)index
 {
-    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:[ModelSettings sharedInstance].bookmarkArray];
+    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:self.bookmarkArray];
     NSInteger new_illust_id = [self _safeGetAPIIllustId:illust];
     
     for (id bookmark_illust in bookmarks) {
@@ -169,7 +171,7 @@
 
 - (BOOL)addBookmarkWithIllust:(id)illust
 {
-    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:[ModelSettings sharedInstance].bookmarkArray];
+    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:self.bookmarkArray];
     NSInteger new_illust_id = [self _safeGetAPIIllustId:illust];
     
     for (id bookmark_illust in bookmarks) {
@@ -190,7 +192,7 @@
 // YES - if remove illust success
 - (BOOL)removeBookmarkWithIllustId:(NSInteger)illust_id
 {
-    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:[ModelSettings sharedInstance].bookmarkArray];
+    NSMutableArray *bookmarks = [[NSMutableArray alloc] initWithArray:self.bookmarkArray];
     
     BOOL found = NO;
     for (NSUInteger i = 0; i < bookmarks.count; i++) {

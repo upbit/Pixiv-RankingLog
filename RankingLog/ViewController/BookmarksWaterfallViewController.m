@@ -129,7 +129,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [[ModelSettings sharedInstance] loadBookmarkArrayFromUserDefaults];
     if ([ModelSettings sharedInstance].bookmarkArray) {
         self.illusts = [ModelSettings sharedInstance].bookmarkArray;
         self.navigationItem.title = [NSString stringWithFormat:@"Bookmarks (%lu works)", (unsigned long)self.illusts.count];
