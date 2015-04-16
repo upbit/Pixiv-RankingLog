@@ -25,6 +25,9 @@ DerivedData
 #
 # Pods/
 
+# react-native
+node_modules/
+
 # user file
 RankingLogHelper.psd
 

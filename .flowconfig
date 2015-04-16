@@ -1,0 +1,20 @@
+[ignore]
+
+# We fork some components by platform.
+.*/*.web.js
+.*/*.android.js
+
+# Ignore react-tools where there are overlaps, but don't ignore anything that
+# react-native relies on
+.*/node_modules/react-tools/src/vendor/core/ExecutionEnvironment.js
+.*/node_modules/react-tools/src/browser/eventPlugins/ResponderEventPlugin.js
+.*/node_modules/react-tools/src/browser/ui/React.js
+.*/node_modules/react-tools/src/core/ReactInstanceHandles.js
+.*/node_modules/react-tools/src/event/EventPropagators.js
+
+[include]
+
+[libs]
+
+[options]
+
