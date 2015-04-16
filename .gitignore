@@ -27,6 +27,7 @@ DerivedData
 
 # react-native
 node_modules/
+npm-debug.log
 
 # user file
 RankingLogHelper.psd

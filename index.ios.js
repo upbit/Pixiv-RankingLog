@@ -12,8 +12,15 @@ var {
   View,
 } = React;
 
+var PixivAPI = require('PixivAPI');
+
 var PixivRankingLog = React.createClass({
   render: function() {
+    PixivAPI.SAPI_ranking(1, 'daily', 'all', (result) => {
+      console.log("rtu");
+      console.log(result);
+    });
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
