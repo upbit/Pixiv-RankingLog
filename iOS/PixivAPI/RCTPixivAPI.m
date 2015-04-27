@@ -10,9 +10,12 @@ RCT_EXPORT_METHOD(SAPI_ranking:(RCTResponseSenderBlock)callback
                   content:(NSString *)content)
 {
   NSMutableArray *results = [[NSMutableArray alloc] init];
-  for (SAPIIllust *illust in [[PixivAPI sharedInstance] SAPI_ranking:page mode:mode content:content requireAuth:false]) {
-    [results addObject:[illust toDataArray]];
-  }
+  
+  [[PixivAPI sharedInstance] loginIfNeeded:@"username" password:@"password"];
+  
+  PAPIIllust *illust = [[PixivAPI sharedInstance] PAPI_works:50025431];
+  [results addObject:[illust toJsonString]];
+
   callback(@[results]);
 }
 

@@ -61,6 +61,20 @@
     return illust;
 }
 
+- (NSString *)toJsonString
+{
+    NSMutableDictionary *JsonDict = [[NSMutableDictionary alloc] init];
+    NSError *error;
+    
+    [JsonDict setObject:[NSNumber numberWithInteger:self.illust_id] forKey:@"illust_id"];
+    [JsonDict setObject:self.title forKey:@"title"];
+
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:JsonDict
+                                                       options:0  //NSJSONWritingPrettyPrinted
+                                                         error:&error];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
 #pragma mark - Illust properties
 
 - (NSInteger)safeIntegerValue:(id)data
