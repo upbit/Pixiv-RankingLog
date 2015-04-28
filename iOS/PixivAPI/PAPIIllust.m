@@ -61,11 +61,9 @@
     return illust;
 }
 
-- (NSString *)toJsonString
+- (NSDictionary *)toObject
 {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.response options:0 error:&error];
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return self.response;
 }
 
 #pragma mark - Illust properties

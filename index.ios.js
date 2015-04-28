@@ -12,14 +12,21 @@ var {
   View,
 } = React;
 
-var PixivAPI = require('NativeModules').PixivAPI;
+var PixivAPI = require('PixivAPI');
 
 var PixivRankingLog = React.createClass({
   componentWillMount: function() {
-    PixivAPI.SAPI_ranking((results) => {
+    // PixivAPI.loginIfNeeded("username", "password", (results) => {
+    //   console.log("loginIfNeeded");
+    //   console.log(results);
+    // });
+
+    PixivAPI.SAPI_ranking(1, "daily", "all", false, (results) => {
+      console.log("SAPI_ranking");
       var json_results = JSON.parse(results);
       console.log(json_results);
-      console.log(json_results.image_urls.large);
+      console.log(json_results[0])
+      console.log(json_results[1].mobileURL)
     });
   },
 

@@ -7,7 +7,10 @@
 var PixivAPI = require('NativeModules').PixivAPI;
 
 module.exports = {
-  SAPI_ranking: function(page: number, mode: string, content: string, callback: Function) {
-    PixivAPI.SAPI_ranking(callback, page, mode, content);
-  },
+	loginIfNeeded: function(username: string, password: string, callback: Function) {
+		PixivAPI.loginIfNeeded(username, password, callback);
+	},
+	SAPI_ranking: function(page: number, mode: string, content: string, requireAuth: boolean, callback: Function) {
+		PixivAPI.SAPI_ranking(page, mode, content, requireAuth, callback);
+	},
 };
