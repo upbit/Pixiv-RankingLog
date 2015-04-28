@@ -12,15 +12,18 @@ var {
   View,
 } = React;
 
-var PixivAPI = require('PixivAPI');
+var PixivAPI = require('NativeModules').PixivAPI;
 
 var PixivRankingLog = React.createClass({
-  render: function() {
-    PixivAPI.SAPI_ranking(1, 'daily', 'all', (result) => {
-      console.log("rtu");
-      console.log(result);
+  componentWillMount: function() {
+    PixivAPI.SAPI_ranking((results) => {
+      var json_results = JSON.parse(results);
+      console.log(json_results);
+      console.log(json_results.image_urls.large);
     });
+  },
 
+  render: function() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>

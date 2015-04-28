@@ -63,15 +63,8 @@
 
 - (NSString *)toJsonString
 {
-    NSMutableDictionary *JsonDict = [[NSMutableDictionary alloc] init];
     NSError *error;
-    
-    [JsonDict setObject:[NSNumber numberWithInteger:self.illust_id] forKey:@"illust_id"];
-    [JsonDict setObject:self.title forKey:@"title"];
-
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:JsonDict
-                                                       options:0  //NSJSONWritingPrettyPrinted
-                                                         error:&error];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.response options:0 error:&error];
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 

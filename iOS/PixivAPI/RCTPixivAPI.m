@@ -4,10 +4,7 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(SAPI_ranking:(RCTResponseSenderBlock)callback
-                  page:(NSInteger)page
-                  mode:(NSString *)mode
-                  content:(NSString *)content)
+RCT_EXPORT_METHOD(SAPI_ranking:(RCTResponseSenderBlock)callback)
 {
   NSMutableArray *results = [[NSMutableArray alloc] init];
   
@@ -16,7 +13,7 @@ RCT_EXPORT_METHOD(SAPI_ranking:(RCTResponseSenderBlock)callback
   PAPIIllust *illust = [[PixivAPI sharedInstance] PAPI_works:50025431];
   [results addObject:[illust toJsonString]];
 
-  callback(@[results]);
+  callback(results);
 }
 
 @end
