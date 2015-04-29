@@ -16,17 +16,8 @@ var PixivAPI = require('PixivAPI');
 
 var PixivRankingLog = React.createClass({
   componentWillMount: function() {
-    // PixivAPI.loginIfNeeded("username", "password", (results) => {
-    //   console.log("loginIfNeeded");
-    //   console.log(results);
-    // });
-
     PixivAPI.SAPI_ranking(1, "daily", "all", false, (results) => {
-      console.log("SAPI_ranking");
-      var json_results = JSON.parse(results);
-      console.log(json_results);
-      console.log(json_results[0])
-      console.log(json_results[1].mobileURL)
+      console.log(results);
     });
   },
 
