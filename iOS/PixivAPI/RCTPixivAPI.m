@@ -4,6 +4,23 @@
 
 RCT_EXPORT_MODULE()
 
+#define SAPI_LIST_CALL(...) do { \
+  NSMutableArray *results = [[NSMutableArray alloc] init]; \
+  NSArray *illusts = [[PixivAPI sharedInstance] __VA_ARGS__]; \
+  for (SAPIIllust *illust in illusts) [results addObject:[illust toObject]]; \
+  callback(@[[RCTPixivAPI toJSONString:results]]); \
+} while(0)
+
+#define PAPI_CALL(...) do { \
+  NSDictionary *object = [[[PixivAPI sharedInstance] __VA_ARGS__] toObject]; \
+  callback(@[[RCTPixivAPI toJSONString:object]]); \
+} while(0)
+
+#define PAPI_LIST_CALL(...) do { \
+  NSArray *array = [[[PixivAPI sharedInstance] __VA_ARGS__] toObjectList]; \
+  callback(@[[RCTPixivAPI toJSONString:array]]); \
+} while(0)
+
 #pragma mark - JSON helper
 
 + (NSString *)toJSONString:(id)data
@@ -24,13 +41,6 @@ RCT_EXPORT_METHOD(loginIfNeeded:(NSString *)username password:(NSString *)passwo
 
 #pragma mark - SAPI exports
 
-#define SAPI_LIST_CALL(...) do { \
-  NSMutableArray *results = [[NSMutableArray alloc] init]; \
-  NSArray *illusts = [[PixivAPI sharedInstance] __VA_ARGS__]; \
-  for (SAPIIllust *illust in illusts) [results addObject:[illust toObject]]; \
-  callback(@[[RCTPixivAPI toJSONString:results]]); \
-} while(0)
-
 RCT_EXPORT_METHOD(SAPI_ranking:(NSInteger)page mode:(NSString *)mode content:(NSString *)content
                   requireAuth:(BOOL)requireAuth callback:(RCTResponseSenderBlock)callback)
 {
@@ -49,17 +59,12 @@ RCT_EXPORT_METHOD(SAPI_member_illust:(NSInteger)author_id page:(NSInteger)page
   SAPI_LIST_CALL(SAPI_member_illust:author_id page:page requireAuth:requireAuth);
 }
 
+RCT_EXPORT_METHOD(SAPI_illust:(NSInteger)illust_id requireAuth:(BOOL)requireAuth callback:(RCTResponseSenderBlock)callback)
+{
+  PAPI_CALL(SAPI_illust:illust_id requireAuth:requireAuth);
+}
+
 #pragma mark - PAPI exports
-
-#define PAPI_CALL(...) do { \
-  NSDictionary *object = [[[PixivAPI sharedInstance] __VA_ARGS__] toObject]; \
-  callback(@[[RCTPixivAPI toJSONString:object]]); \
-} while(0)
-
-#define PAPI_LIST_CALL(...) do { \
-  NSArray *array = [[[PixivAPI sharedInstance] __VA_ARGS__] toObjectList]; \
-  callback(@[[RCTPixivAPI toJSONString:array]]); \
-} while(0)
 
 RCT_EXPORT_METHOD(PAPI_works:(NSInteger)illust_id callback:(RCTResponseSenderBlock)callback)
 {

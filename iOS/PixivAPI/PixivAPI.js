@@ -21,6 +21,9 @@ module.exports = {
 	SAPI_member_illust: function(author_id:number, page:number, requireAuth:boolean, callback:Function) {
 		PixivAPI.SAPI_member_illust( author_id, requireAuth, (results) => callback(JSON.parse(results)) );
 	},
+	SAPI_illust: function(illust_id:number, requireAuth:boolean, callback:Function) {
+		PixivAPI.SAPI_illust( illust_id, requireAuth, (results) => callback(JSON.parse(results)) );
+	},
 
 	// PAPI
 	PAPI_works: function(illust_id:number, callback:Function) {

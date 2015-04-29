@@ -9,52 +9,107 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
+  ListView,
   View,
 } = React;
 
-var PixivAPI = require('PixivAPI');
+var api = require("./App/Network/api");
+var utils = require('./App/Utils/functions');
+var css = require("./App/View/CommonStyles");
+
+var PixivIllust = require("./App/View/PixivIllust");
+
+var resultsCache = {
+  data: null,
+  page: 1,
+};
 
 var PixivRankingLog = React.createClass({
-  componentWillMount: function() {
-    PixivAPI.SAPI_ranking(1, "daily", "all", false, (results) => {
-      console.log(results);
+  getInitialState: function() {
+    return {
+      dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+      loaded: false,
+    };
+  },
+  componentDidMount: function() {
+    this.fetchData(false);
+  },
+
+  updataResultsCache: function(responseData) {
+    if (resultsCache.data) {
+      var cached_replies = resultsCache.data.slice();
+      Array.prototype.push.apply(cached_replies, responseData);
+      resultsCache.data = cached_replies;
+    } else {
+      resultsCache.data = responseData;
+    }
+    resultsCache.page += 1;
+  },
+  fetchData: function(loadingTail) {
+    api.ranking(resultsCache.page, (responseData) => {
+      this.updataResultsCache(responseData);
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(resultsCache.data),
+        loaded: true,
+      });
+
+      if (loadingTail) {
+        this.setState({
+          isLoadingTail: false,
+        });
+      };
     });
   },
 
   render: function() {
+    if(!this.state.loaded){
+      return(
+        <View style={[css.center, css.transparent, css.flex]}>
+          <Text>
+            Loading...
+          </Text>
+        </View>
+      );
+    }
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+Control+Z for dev menu
-        </Text>
-      </View>
+      this.renderListView()
     );
-  }
-});
+  },
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  onEndReached: function() {
+    if (this.state.isLoadingTail) {
+      console.log("onEndReached - loadingTail = true");
+      return;
+    };
+
+    console.log("onEndReached:", resultsCache.page);
+    this.setState({
+      isLoadingTail: true,
+    });
+    this.fetchData(true);
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+
+  renderListView: function() {
+    return(
+      <ListView
+        contentContainerStyle={[css.row, {flexWrap: 'wrap', justifyContent: 'center'}]}
+        dataSource={this.state.dataSource}
+        onEndReached={this.onEndReached}
+        onEndReachedThreshold={utils.SCREEN_HEIGHT * 0.4}
+        renderRow={this.renderIllust}
+        style={{backgroundColor: 'white'}}/>
+    );
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  renderIllust: function(illust) {
+    return(
+      <PixivIllust
+        onPress={() => this.onIllustPress(illust)}
+        illust={illust}/>
+    );
+  },
+
+  onIllustPress: function(illust) {
+
   },
 });
 
