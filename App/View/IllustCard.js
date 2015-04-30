@@ -13,7 +13,7 @@ var {
 var css = require("./CommonStyles");
 var utils = require("../Utils/functions");
 
-var PixivIllust = React.createClass({
+module.exports = React.createClass({
   render: function() {
     var illust = this.props.illust;
     return (
@@ -36,5 +36,3 @@ var styles = StyleSheet.create({
     borderRadius: 4,
   },
 });
-
-module.exports = PixivIllust;
