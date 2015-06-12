@@ -31,18 +31,18 @@ var Discover = React.createClass({
     this.fetchData(false);
   },
 
-  updataResultsCache: function(responseData) {
+  updataResultsCache: function(response) {
     if (resultsCache.data) {
       var cached_replies = resultsCache.data.slice();
-      Array.prototype.push.apply(cached_replies, responseData);
+      Array.prototype.push.apply(cached_replies, response);
       resultsCache.data = cached_replies;
     } else {
-      resultsCache.data = responseData;
+      resultsCache.data = response;
     }
     resultsCache.page += 1;
   },
   fetchData: function(loadingTail) {
-    api.ranking(resultsCache.page, (responseData) => {
+    api.ranking_all(resultsCache.page, (responseData) => {
       this.updataResultsCache(responseData);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(resultsCache.data),
@@ -58,6 +58,19 @@ var Discover = React.createClass({
   },
 
   render: function() {
+    if(!this.state.login){
+      api.login("username", "password", (success) => {
+        this.setState({ login: true });
+      });
+      return(
+        <View style={[css.center, css.transparent, css.flex]}>
+          <Text>
+            Login Pixiv...
+          </Text>
+        </View>
+      )
+    }
+
     if(!this.state.loaded){
       return(
         <View style={[css.center, css.transparent, css.flex]}>
@@ -67,6 +80,7 @@ var Discover = React.createClass({
         </View>
       );
     }
+
     return (
       this.renderListView()
     );
@@ -97,6 +111,7 @@ var Discover = React.createClass({
     );
   },
   renderIllust: function(illust) {
+    //console.log(illust);
     return(
       <IllustCard
         onPress={() => this.onIllustPress(illust)}

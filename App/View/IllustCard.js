@@ -18,7 +18,7 @@ module.exports = React.createClass({
     var illust = this.props.illust;
     return (
       <View style={[styles.container, css.row]}>
-        <Image style={[styles.background]} source={{uri: illust.thumbURL}}/>
+        <Image style={[styles.background]} source={{uri: illust.image_urls.px_128x128}}/>
       </View>
     );
   }

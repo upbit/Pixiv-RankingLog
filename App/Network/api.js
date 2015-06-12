@@ -1,5 +1,9 @@
 var PixivAPI = require('PixivAPI');
 
-exports.ranking = function (page, callback) {
-	PixivAPI.SAPI_ranking(page, "week", "all", false, callback);
+exports.login = function (username, password, callback) {
+	PixivAPI.loginIfNeeded(username, password, callback);
+};
+
+exports.ranking_all = function (page, callback) {
+	PixivAPI.PAPI_ranking_all("weekly", page, callback);
 };
