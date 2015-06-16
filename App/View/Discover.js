@@ -115,7 +115,7 @@ var Discover = React.createClass({
     return(
       <IllustCard
         onPress={() => this.onIllustPress(illust)}
-        illust={illust}/>
+        illust={illust} max_width={128}/>
     );
   },
 
