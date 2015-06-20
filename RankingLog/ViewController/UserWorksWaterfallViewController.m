@@ -52,10 +52,11 @@
     
     self.currentPage += 1;
     
-    NSArray *SAPI_illusts = [[PixivAPI sharedInstance] SAPI_member_illust:self.author_id page:self.currentPage requireAuth:YES];
-    NSLog(@"get member_illust(%ld, page=%ld): return %ld works", (long)self.author_id, (long)self.currentPage, (long)SAPI_illusts.count);
+    PAPIIllustList *resultList = [[PixivAPI sharedInstance] PAPI_users_works:self.author_id page:self.currentPage publicity:YES];
 
-    return SAPI_illusts;
+    NSLog(@"get member_illust(%ld, page=%ld): return %ld works", (long)self.author_id, (long)self.currentPage, (long)resultList.illusts.count);
+
+    return resultList.illusts;
 }
 
 - (void)asyncGetAuthorIllusts
