@@ -16,17 +16,23 @@
         NSLog(@"jsonData.count for jsonData.response not found");
         return nil;
     }
-    
+
     PAPIIllustList *list = [[PAPIIllustList alloc] init];
     list.raw = jsonData;
     list.pagination = nil;
     if ([[jsonData objectForKey:@"pagination"] isKindOfClass:[NSDictionary class]]) {
         list.pagination = jsonData[@"pagination"];
     }
-    
+
     // from response[] gen NSArray of PAPIIllust
     NSMutableArray *tmpIllusts = [[NSMutableArray alloc] init];
-    for (NSDictionary *jsonIllust in jsonData[@"response"]) {
+    NSArray *responseList = nil;
+    if ([[jsonData[@"response"] firstObject] objectForKey:@"works"]) {
+        responseList = [[jsonData[@"response"] firstObject] objectForKey:@"works"];
+    } else {
+        responseList = jsonData[@"response"];
+    }
+    for (NSDictionary *jsonIllust in responseList) {
         PAPIIllust *illust = [PAPIIllust parseRawDictionaryToModel:jsonIllust isWork:isWork];
         if (!illust) {
             NSLog(@"parseRaw() error:\n%@", jsonIllust);
@@ -37,6 +43,15 @@
     list.illusts = tmpIllusts;
     
     return list;
+}
+
+- (NSArray *)toObjectList;
+{
+    NSMutableArray *tmpIllusts = [[NSMutableArray alloc] init];
+    for (PAPIIllust *illust in self.illusts) {
+        [tmpIllusts addObject:illust.toObject];
+    }
+    return tmpIllusts;
 }
 
 - (NSInteger)count

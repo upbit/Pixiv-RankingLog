@@ -1,0 +1,18 @@
+PODS:
+  - CHTCollectionViewWaterfallLayout (HEAD based on 0.9.1)
+  - SDWebImage (3.7.1):
+    - SDWebImage/Core (= 3.7.1)
+  - SDWebImage/Core (3.7.1)
+  - SVProgressHUD (HEAD based on 1.1.3)
+
+DEPENDENCIES:
+  - CHTCollectionViewWaterfallLayout (HEAD)
+  - SDWebImage (~> 3.6)
+  - SVProgressHUD (HEAD)
+
+SPEC CHECKSUMS:
+  CHTCollectionViewWaterfallLayout: 1a8da4fc662702cbddda8926ced266036a829f84
+  SDWebImage: ed3095af2ff88b436426037444979b917f6c5575
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+
+COCOAPODS: 0.37.2
