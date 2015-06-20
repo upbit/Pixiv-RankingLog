@@ -64,21 +64,19 @@
     [self updateTitle];
     
     NSString *mode = [ModelSettings sharedInstance].mode;
-    NSCalendarUnit flags = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear;
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:flags fromDate:[ModelSettings sharedInstance].date];
+    NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
+    [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
+    NSString *formattedStringDate = [dateFormatter1 stringFromDate:[ModelSettings sharedInstance].date];
 
-
-    NSArray *illusts = [[PixivAPI sharedInstance] SAPI_ranking_log:[components year] month:[components month] day:[components day]
-                                                  mode:mode page:self.currentPage requireAuth:YES];
-
-    NSLog(@"get RankingLog(%@, %ld-%ld-%ld, page=%ld) return %ld works", mode, (long)[components year], (long)[components month], (long)[components day], (long)self.currentPage, (long)illusts.count);
+    PAPIIllustList *resultList = [[PixivAPI sharedInstance] PAPI_ranking_log:mode page:self.currentPage date:formattedStringDate];
+    NSLog(@"get RankingLog(%@, %@, page=%ld) return %ld works", mode, formattedStringDate, (long)self.currentPage, (long)resultList.illusts.count);
     
-    if ((illusts.count == 0) ||     // 已经更多数据或出错
+    if ((resultList.next == -1) ||     // 已经没有更多数据
         (self.currentPage >= [ModelSettings sharedInstance].pageLimit)) {   // 翻页达到深度限制
         [self goPriorRankingRound];
     }
-
-    return illusts;
+    
+    return resultList.illusts;
 }
 
 - (void)asyncGetRankingLog
@@ -87,11 +85,11 @@
     [ApplicationDelegate setNetworkActivityIndicatorVisible:YES];
     [[PixivAPI sharedInstance] asyncBlockingQueue:^{
         
-        NSArray *SAPI_illusts = [weakSelf fetchNextRankingLog];
+        NSArray *PAPI_illusts = [weakSelf fetchNextRankingLog];
         [[PixivAPI sharedInstance] onMainQueue:^{
             [ApplicationDelegate setNetworkActivityIndicatorVisible:NO];
-            if (SAPI_illusts) {
-                weakSelf.illusts = [weakSelf.illusts arrayByAddingObjectsFromArray:SAPI_illusts];
+            if (PAPI_illusts) {
+                weakSelf.illusts = [weakSelf.illusts arrayByAddingObjectsFromArray:PAPI_illusts];
             } else {
                 NSLog(@"fetchNextRankingLog: failed.");
             }

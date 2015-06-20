@@ -9,8 +9,8 @@
 // CHTCollectionViewWaterfallLayout
 #define COCOAPODS_POD_AVAILABLE_CHTCollectionViewWaterfallLayout
 #define COCOAPODS_VERSION_MAJOR_CHTCollectionViewWaterfallLayout 0
-#define COCOAPODS_VERSION_MINOR_CHTCollectionViewWaterfallLayout 8
-#define COCOAPODS_VERSION_PATCH_CHTCollectionViewWaterfallLayout 0
+#define COCOAPODS_VERSION_MINOR_CHTCollectionViewWaterfallLayout 9
+#define COCOAPODS_VERSION_PATCH_CHTCollectionViewWaterfallLayout 1
 
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
@@ -27,6 +27,6 @@
 // SVProgressHUD
 #define COCOAPODS_POD_AVAILABLE_SVProgressHUD
 #define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
-#define COCOAPODS_VERSION_MINOR_SVProgressHUD 0
-#define COCOAPODS_VERSION_PATCH_SVProgressHUD 0
+#define COCOAPODS_VERSION_MINOR_SVProgressHUD 1
+#define COCOAPODS_VERSION_PATCH_SVProgressHUD 3
 
