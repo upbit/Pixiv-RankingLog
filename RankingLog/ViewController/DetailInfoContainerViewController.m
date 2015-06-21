@@ -73,7 +73,7 @@
                                  NSLog(@"  fetch author=%ld profile 50x50 complete.", (long)PAPI_illust.author_id);
                              }];
 
-        if (PAPI_illust.favorite_id != 0) {
+        if (PAPI_illust.favorite_id > 0) {
             self.favoriteButton.imageView.image = [UIImage imageNamed:@"StarBlack"];
             self.favoriteButton.tag = PAPI_illust.favorite_id;      // storage favorite_id in tag, so can delete favorite later
         }
