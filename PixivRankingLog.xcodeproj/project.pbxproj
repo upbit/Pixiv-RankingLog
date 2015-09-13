@@ -24,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		CB1402FC1B244C28001A070A /* libRCTPixivAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1402FB1B244BA1001A070A /* libRCTPixivAPI.a */; };
+		CBFA918A1BA5B2DC0045F0EE /* libRCTExImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFA917D1BA5B2C00045F0EE /* libRCTExImage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,20 @@
 			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
 			remoteInfo = RCTPixivAPI;
 		};
+		CBFA917C1BA5B2C00045F0EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBFA91761BA5B2BF0045F0EE /* RCTExImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8E15D291B4BE78700A7A3B5;
+			remoteInfo = RCTExImage;
+		};
+		CBFA917E1BA5B2C00045F0EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBFA91761BA5B2BF0045F0EE /* RCTExImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8E15D341B4BE78700A7A3B5;
+			remoteInfo = RCTExImageTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +151,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		CB1402F61B244BA1001A070A /* RCTPixivAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPixivAPI.xcodeproj; path = iOS/PixivAPI/RCTPixivAPI.xcodeproj; sourceTree = "<group>"; };
+		CBFA91761BA5B2BF0045F0EE /* RCTExImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTExImage.xcodeproj; path = "node_modules/react-native-eximage/RCTExImage.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBFA918A1BA5B2DC0045F0EE /* libRCTExImage.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -273,6 +290,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CBFA91761BA5B2BF0045F0EE /* RCTExImage.xcodeproj */,
 				CB1402F61B244BA1001A070A /* RCTPixivAPI.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -321,6 +339,15 @@
 			isa = PBXGroup;
 			children = (
 				CB1402FB1B244BA1001A070A /* libRCTPixivAPI.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CBFA91771BA5B2BF0045F0EE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CBFA917D1BA5B2C00045F0EE /* libRCTExImage.a */,
+				CBFA917F1BA5B2C00045F0EE /* RCTExImageTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -393,6 +420,10 @@
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
+				},
+				{
+					ProductGroup = CBFA91771BA5B2BF0045F0EE /* Products */;
+					ProjectRef = CBFA91761BA5B2BF0045F0EE /* RCTExImage.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -519,6 +550,20 @@
 			fileType = archive.ar;
 			path = libRCTPixivAPI.a;
 			remoteRef = CB1402FA1B244BA1001A070A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBFA917D1BA5B2C00045F0EE /* libRCTExImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTExImage.a;
+			remoteRef = CBFA917C1BA5B2C00045F0EE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBFA917F1BA5B2C00045F0EE /* RCTExImageTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTExImageTests.xctest;
+			remoteRef = CBFA917E1BA5B2C00045F0EE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
