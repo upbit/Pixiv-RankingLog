@@ -23,11 +23,49 @@ var resultsCache = {
 var Discover = React.createClass({
   getInitialState: function() {
     return {
-      dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       loaded: false,
     };
   },
+
+  render: function() {
+    if(!this.state.login){
+      api.login("grave1", "6654321", (success) => {
+        console.log(success)
+        this.setState({ login: true });
+      });
+      return(
+        <View style={[css.center, css.transparent, css.flex]}>
+          <Text>
+            Login Pixiv...
+          </Text>
+        </View>
+      )
+    }
+
+    if(!this.state.loaded){
+      return(
+        <View style={[css.center, css.transparent, css.flex]}>
+          <Text>
+            Loading...
+          </Text>
+        </View>
+      );
+    }
+
+    return (
+      <ListView
+        contentContainerStyle={[css.row, {flexWrap: 'wrap', justifyContent: 'center'}]}
+        dataSource={this.state.dataSource}
+        onEndReached={this.onEndReached}
+        onEndReachedThreshold={utils.SCREEN_HEIGHT * 0.4}
+        renderRow={this.renderIllust}
+        style={{backgroundColor: 'white'}}/>
+    );
+  },
+
   componentDidMount: function() {
+    console.log("componentDidMount fetchData");
     this.fetchData(false);
   },
 
@@ -57,35 +95,6 @@ var Discover = React.createClass({
     });
   },
 
-  render: function() {
-    if(!this.state.login){
-      api.login("username", "password", (success) => {
-        this.setState({ login: true });
-      });
-      return(
-        <View style={[css.center, css.transparent, css.flex]}>
-          <Text>
-            Login Pixiv...
-          </Text>
-        </View>
-      )
-    }
-
-    if(!this.state.loaded){
-      return(
-        <View style={[css.center, css.transparent, css.flex]}>
-          <Text>
-            Loading...
-          </Text>
-        </View>
-      );
-    }
-
-    return (
-      this.renderListView()
-    );
-  },
-
   onEndReached: function() {
     if (this.state.isLoadingTail) {
       console.log("onEndReached - loadingTail = true");
@@ -99,28 +108,17 @@ var Discover = React.createClass({
     this.fetchData(true);
   },
 
-  renderListView: function() {
-    return(
-      <ListView
-        contentContainerStyle={[css.row, {flexWrap: 'wrap', justifyContent: 'center'}]}
-        dataSource={this.state.dataSource}
-        onEndReached={this.onEndReached}
-        onEndReachedThreshold={utils.SCREEN_HEIGHT * 0.4}
-        renderRow={this.renderIllust}
-        style={{backgroundColor: 'white'}}/>
-    );
-  },
   renderIllust: function(illust) {
-    //console.log(illust);
+    var halfWidth = utils.SCREEN_WIDTH / 3;
     return(
       <IllustCard
         onPress={() => this.onIllustPress(illust)}
-        illust={illust} max_width={128}/>
+        illust={illust} max_width={halfWidth}/>
     );
   },
 
   onIllustPress: function(illust) {
-
+    console.log(illust);
   },
 });
 
