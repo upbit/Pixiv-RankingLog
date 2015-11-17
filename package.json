@@ -6,7 +6,7 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
-    "autoresponsive-react-native": "^1.0.4",
+    "autoresponsive-common": "^1.0.1",
     "react-native": "^0.14.2"
   }
 }

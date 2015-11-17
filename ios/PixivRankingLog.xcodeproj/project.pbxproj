@@ -24,7 +24,6 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		CB1F51181BF6DA1F007386FC /* libRCTPixivAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1F51121BF6DA14007386FC /* libRCTPixivAPI.a */; };
-		CBEE495F1BF6C60300E97DCB /* libRCTExImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEE49531BF6C5E600E97DCB /* libRCTExImage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,20 +111,6 @@
 			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
 			remoteInfo = RCTPixivAPI;
 		};
-		CBEE49521BF6C5E600E97DCB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8E15D291B4BE78700A7A3B5;
-			remoteInfo = RCTExImage;
-		};
-		CBEE49541BF6C5E600E97DCB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8E15D341B4BE78700A7A3B5;
-			remoteInfo = RCTExImageTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -151,7 +136,6 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		CB1F51061BF6DA13007386FC /* RCTPixivAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPixivAPI.xcodeproj; path = PixivAPI/RCTPixivAPI.xcodeproj; sourceTree = "<group>"; };
-		CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTExImage.xcodeproj; path = "../node_modules/react-native-eximage/RCTExImage.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,7 +151,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB1F51181BF6DA1F007386FC /* libRCTPixivAPI.a in Frameworks */,
-				CBEE495F1BF6C60300E97DCB /* libRCTExImage.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -292,7 +275,6 @@
 			children = (
 				CB1F51061BF6DA13007386FC /* RCTPixivAPI.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
-				CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
 				00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */,
@@ -339,15 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				CB1F51121BF6DA14007386FC /* libRCTPixivAPI.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		CBEE494D1BF6C5E600E97DCB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CBEE49531BF6C5E600E97DCB /* libRCTExImage.a */,
-				CBEE49551BF6C5E600E97DCB /* RCTExImageTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -420,10 +393,6 @@
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
-				},
-				{
-					ProductGroup = CBEE494D1BF6C5E600E97DCB /* Products */;
-					ProjectRef = CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -550,20 +519,6 @@
 			fileType = archive.ar;
 			path = libRCTPixivAPI.a;
 			remoteRef = CB1F51111BF6DA14007386FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CBEE49531BF6C5E600E97DCB /* libRCTExImage.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTExImage.a;
-			remoteRef = CBEE49521BF6C5E600E97DCB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CBEE49551BF6C5E600E97DCB /* RCTExImageTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RCTExImageTests.xctest;
-			remoteRef = CBEE49541BF6C5E600E97DCB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

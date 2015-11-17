@@ -8,9 +8,12 @@ var React = require('react-native');
 var {
   AppRegistry,
   NavigatorIOS,
+  Navigator,
+  StyleSheet,
+  Text,
 } = React;
 
-var Discover = require("./App/View/Discover");
+var Discover = require("./app/view/Discover2");
 
 var PixivRankingLog = React.createClass({
   render: function() {
@@ -25,7 +28,7 @@ var PixivRankingLog = React.createClass({
           component: Discover,
         }}/>
     );
-  },  
+  },
 });
 
 AppRegistry.registerComponent('PixivRankingLog', () => PixivRankingLog);

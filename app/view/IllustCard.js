@@ -9,7 +9,7 @@ var {
 } = React;
 
 var css = require("./CommonStyles");
-var utils = require("../Utils/functions");
+var utils = require("../utils/functions");
 
 var ExImage = require('react-native-eximage');
 

@@ -9,8 +9,8 @@ var {
   Image,
 } = React;
 
-var api = require("../Network/api");
-var utils = require('../Utils/functions');
+var api = require("../network/api");
+var utils = require('../utils/functions');
 var css = require("./CommonStyles");
 
 var IllustCard = require("./IllustCard");
