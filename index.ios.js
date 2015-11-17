@@ -13,7 +13,7 @@ var {
   Text,
 } = React;
 
-var Discover = require("./app/view/Discover2");
+var Discover = require("./app/view/Discover");
 
 var PixivRankingLog = React.createClass({
   render: function() {
