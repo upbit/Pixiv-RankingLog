@@ -23,8 +23,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		CB832CB61BA5D50500AFF6E8 /* libRCTExImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB832CAA1BA5D4E200AFF6E8 /* libRCTExImage.a */; };
-		CB8D1B4C1BA70F9C00465529 /* libRCTPixivAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8D1B4B1BA70F9700465529 /* libRCTPixivAPI.a */; };
+		CB1F51181BF6DA1F007386FC /* libRCTPixivAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1F51121BF6DA14007386FC /* libRCTPixivAPI.a */; };
+		CBEE495F1BF6C60300E97DCB /* libRCTExImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEE49531BF6C5E600E97DCB /* libRCTExImage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,26 +105,26 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		CB832CA91BA5D4E200AFF6E8 /* PBXContainerItemProxy */ = {
+		CB1F51111BF6DA14007386FC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CB832CA21BA5D4E200AFF6E8 /* RCTExImage.xcodeproj */;
+			containerPortal = CB1F51061BF6DA13007386FC /* RCTPixivAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
+			remoteInfo = RCTPixivAPI;
+		};
+		CBEE49521BF6C5E600E97DCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F8E15D291B4BE78700A7A3B5;
 			remoteInfo = RCTExImage;
 		};
-		CB832CAB1BA5D4E200AFF6E8 /* PBXContainerItemProxy */ = {
+		CBEE49541BF6C5E600E97DCB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CB832CA21BA5D4E200AFF6E8 /* RCTExImage.xcodeproj */;
+			containerPortal = CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F8E15D341B4BE78700A7A3B5;
 			remoteInfo = RCTExImageTests;
-		};
-		CB8D1B4A1BA70F9700465529 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CB8D1B461BA70F9700465529 /* RCTPixivAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
-			remoteInfo = RCTPixivAPI;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -141,17 +141,17 @@
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* PixivRankingLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixivRankingLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PixivRankingLog/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PixivRankingLog/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PixivRankingLog/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PixivRankingLog/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PixivRankingLog/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		CB832CA21BA5D4E200AFF6E8 /* RCTExImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTExImage.xcodeproj; path = "../node_modules/react-native-eximage/RCTExImage.xcodeproj"; sourceTree = "<group>"; };
-		CB8D1B461BA70F9700465529 /* RCTPixivAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPixivAPI.xcodeproj; path = PixivAPI/RCTPixivAPI.xcodeproj; sourceTree = "<group>"; };
+		CB1F51061BF6DA13007386FC /* RCTPixivAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPixivAPI.xcodeproj; path = PixivAPI/RCTPixivAPI.xcodeproj; sourceTree = "<group>"; };
+		CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTExImage.xcodeproj; path = "../node_modules/react-native-eximage/RCTExImage.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,8 +166,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB8D1B4C1BA70F9C00465529 /* libRCTPixivAPI.a in Frameworks */,
-				CB832CB61BA5D50500AFF6E8 /* libRCTExImage.a in Frameworks */,
+				CB1F51181BF6DA1F007386FC /* libRCTPixivAPI.a in Frameworks */,
+				CBEE495F1BF6C60300E97DCB /* libRCTExImage.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -260,15 +260,15 @@
 		13B07FAE1A68108700A75B9A /* PixivRankingLog */ = {
 			isa = PBXGroup;
 			children = (
+				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			path = PixivRankingLog;
+			name = PixivRankingLog;
 			sourceTree = "<group>";
 		};
 		146834001AC3E56700842450 /* Products */ = {
@@ -290,9 +290,9 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				CB8D1B461BA70F9700465529 /* RCTPixivAPI.xcodeproj */,
-				CB832CA21BA5D4E200AFF6E8 /* RCTExImage.xcodeproj */,
+				CB1F51061BF6DA13007386FC /* RCTPixivAPI.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
+				CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
 				00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */,
@@ -318,8 +318,8 @@
 			isa = PBXGroup;
 			children = (
 				13B07FAE1A68108700A75B9A /* PixivRankingLog */,
-				00E356EF1AD99517003FC87E /* PixivRankingLogTests */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				00E356EF1AD99517003FC87E /* PixivRankingLogTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 			);
 			indentWidth = 2;
@@ -335,19 +335,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CB832CA31BA5D4E200AFF6E8 /* Products */ = {
+		CB1F51071BF6DA13007386FC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CB832CAA1BA5D4E200AFF6E8 /* libRCTExImage.a */,
-				CB832CAC1BA5D4E200AFF6E8 /* RCTExImageTests.xctest */,
+				CB1F51121BF6DA14007386FC /* libRCTPixivAPI.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CB8D1B471BA70F9700465529 /* Products */ = {
+		CBEE494D1BF6C5E600E97DCB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CB8D1B4B1BA70F9700465529 /* libRCTPixivAPI.a */,
+				CBEE49531BF6C5E600E97DCB /* libRCTExImage.a */,
+				CBEE49551BF6C5E600E97DCB /* RCTExImageTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -422,8 +422,8 @@
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
 				{
-					ProductGroup = CB832CA31BA5D4E200AFF6E8 /* Products */;
-					ProjectRef = CB832CA21BA5D4E200AFF6E8 /* RCTExImage.xcodeproj */;
+					ProductGroup = CBEE494D1BF6C5E600E97DCB /* Products */;
+					ProjectRef = CBEE494C1BF6C5E600E97DCB /* RCTExImage.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -442,8 +442,8 @@
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
 				{
-					ProductGroup = CB8D1B471BA70F9700465529 /* Products */;
-					ProjectRef = CB8D1B461BA70F9700465529 /* RCTPixivAPI.xcodeproj */;
+					ProductGroup = CB1F51071BF6DA13007386FC /* Products */;
+					ProjectRef = CB1F51061BF6DA13007386FC /* RCTPixivAPI.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -545,25 +545,25 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CB832CAA1BA5D4E200AFF6E8 /* libRCTExImage.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTExImage.a;
-			remoteRef = CB832CA91BA5D4E200AFF6E8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CB832CAC1BA5D4E200AFF6E8 /* RCTExImageTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RCTExImageTests.xctest;
-			remoteRef = CB832CAB1BA5D4E200AFF6E8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CB8D1B4B1BA70F9700465529 /* libRCTPixivAPI.a */ = {
+		CB1F51121BF6DA14007386FC /* libRCTPixivAPI.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRCTPixivAPI.a;
-			remoteRef = CB8D1B4A1BA70F9700465529 /* PBXContainerItemProxy */;
+			remoteRef = CB1F51111BF6DA14007386FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBEE49531BF6C5E600E97DCB /* libRCTExImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTExImage.a;
+			remoteRef = CBEE49521BF6C5E600E97DCB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBEE49551BF6C5E600E97DCB /* RCTExImageTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTExImageTests.xctest;
+			remoteRef = CBEE49541BF6C5E600E97DCB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -623,6 +623,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = PixivRankingLog;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -669,12 +670,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/PixivRankingLog/Info.plist";
+				INFOPLIST_FILE = PixivRankingLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PixivRankingLog;
@@ -690,7 +692,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/PixivRankingLog/Info.plist";
+				INFOPLIST_FILE = PixivRankingLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PixivRankingLog;

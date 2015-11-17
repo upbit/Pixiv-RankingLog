@@ -6,12 +6,12 @@ RCT_EXPORT_MODULE()
 
 #define PAPI_CALL(...) do { \
   NSDictionary *object = [[[PixivAPI sharedInstance] __VA_ARGS__] toObject]; \
-  callback(@[[RCTPixivAPI toJSONString:object]]); \
+  callback(@[[NSNull null], @[[RCTPixivAPI toJSONString:object]]]); \
 } while(0)
 
 #define PAPI_LIST_CALL(...) do { \
   NSArray *array = [[[PixivAPI sharedInstance] __VA_ARGS__] toObjectList]; \
-  callback(@[[RCTPixivAPI toJSONString:array]]); \
+  callback(@[[NSNull null], @[[RCTPixivAPI toJSONString:array]]]); \
 } while(0)
 
 #pragma mark - JSON helper
