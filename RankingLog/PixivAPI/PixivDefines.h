@@ -28,11 +28,10 @@
 
 // API URLs
 #define PIXIV_LOGIN_ROOT                @"https://oauth.secure.pixiv.net/auth/token"
-#define PIXIV_SAPI_ROOT                 @"http://spapi.pixiv.net/iphone/"
 #define PIXIV_PAPI_ROOT                 @"https://public-api.secure.pixiv.net/v1/"
 
 #define PIXIV_DEFAULT_HEADERS @{                            \
     @"Referer": @"http://spapi.pixiv.net/",                 \
-    @"User-Agent": @"PixivIOSApp/5.1.1",                    \
-    @"Content-Type": @"application/x-www-form-urlencoded",  \
+    @"User-Agent": @"PixivIOSApp/5.8.3",                    \
 }
+//    @"Content-Type": @"application/x-www-form-urlencoded",  \
