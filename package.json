@@ -1,12 +1,13 @@
 {
   "name": "PixivRankingLog",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
     "autoresponsive-common": "^1.0.1",
-    "react-native": "^0.14.2"
+    "react-native": "^0.22.2",
+    "react-native-icons": "^0.7.1"
   }
 }
