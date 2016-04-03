@@ -12,7 +12,8 @@ var {
 // var api = require("../network/api");
 // var utils = require('../utils/functions');
 
-var RefreshableListView = require('./RefreshableListView.js');
+var TabBar = require("./TabBar");
+var RefreshableListView = require('./RefreshableListView');
 
 module.exports = React.createClass({
   getInitialState: function(){
@@ -47,7 +48,7 @@ module.exports = React.createClass({
             );}
           },
         ]}
-        selectedTab={1}
+        selectedTab={0}
         activeTintColor={'#ff8533'}
         iconSize={16}/>
     );
