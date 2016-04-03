@@ -2,32 +2,50 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
-'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
-  NavigatorIOS,
-  Navigator,
+  Component,
   StyleSheet,
   Text,
-} = React;
+  View
+} from 'react-native';
 
-var Discover = require("./app/view/Discover");
-
-var PixivRankingLog = React.createClass({
-  render: function() {
+class PixivRankingLog extends Component {
+  render() {
     return (
-      <NavigatorIOS
-        style={{flex: 1}}
-        tintColor='gray'
-        barTintColor='white'
-        titleTextColor='#8900FF'
-        initialRoute={{
-          title: 'Discover',
-          component: Discover,
-        }}/>
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
+        <Text style={styles.instructions}>
+          To get started, edit index.ios.js
+        </Text>
+        <Text style={styles.instructions}>
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
+        </Text>
+      </View>
     );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
   },
 });
 

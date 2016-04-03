@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node_modules/react-native/packager/packager.sh"
+    "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "autoresponsive-common": "^1.0.1",
-    "react-native": "^0.22.2",
-    "react-native-icons": "^0.7.1"
+    "react": "^0.14.8",
+    "react-native": "^0.22.2"
   }
 }
