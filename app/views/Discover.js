@@ -9,10 +9,9 @@ var {
   TouchableHighlight,
 } = React;
 
-// var api = require("../network/api");
+var api = require("../network/api");
 // var utils = require('../utils/functions');
 
-var TabBar = require("./TabBar");
 var RefreshableListView = require('./RefreshableListView');
 
 module.exports = React.createClass({
@@ -24,40 +23,18 @@ module.exports = React.createClass({
 
   render: function() {
     return(
-      <TabBar structure={[
-          {
-            title: 'Daily',
-            iconName: 'level-up',
-            renderContent: () => {return(
-              <RefreshableListView
-                  renderRow={(row)=>this.renderListViewRow(row, 'daily')}
-                  onRefresh={(page, callback)=>this.listViewOnRefresh('daily', page, callback)}
-                  backgroundColor={'#F6F6EF'}
-                  style={styles.listview}/>
-            );}
-          },
-          {
-            title: 'Bookmarks',
-            iconName: 'star',
-            renderContent: () => {return(
-              <RefreshableListView
-                  renderRow={(row)=>this.renderListViewRow(row, 'bookmarks')}
-                  onRefresh={(page, callback)=>this.listViewOnRefresh('bookmarks', page, callback)}
-                  backgroundColor={'#F6F6EF'}
-                  style={styles.listview}/>
-            );}
-          },
-        ]}
-        selectedTab={0}
-        activeTintColor={'#ff8533'}
-        iconSize={16}/>
+      <RefreshableListView
+          renderRow={(row)=>this.renderListViewRow(row, 'daily')}
+          onRefresh={(page, callback)=>this.listViewOnRefresh('daily', page, callback)}
+          backgroundColor={'#F6F6EF'}
+          style={styles.listview}/>
     );
   },
 
-  renderListViewRow: function(row, pushNavBarTitle){
+  renderListViewRow: function(illust, pushNavBarTitle){
     return(
-      <TouchableHighlight underlayColor={'#f3f3f2'} onPress={()=>this.selectRow(row, pushNavBarTitle)}>
-        <Text>{row.id}</Text>
+      <TouchableHighlight underlayColor={'#f3f3f2'} onPress={()=>this.selectRow(illust, pushNavBarTitle)}>
+        <Text>{illust.work.title}</Text>
       </TouchableHighlight>
     );
   },
@@ -70,71 +47,29 @@ module.exports = React.createClass({
     }
     this.setState({lastType: ranking_type});
   },
-  selectRow: function(row, pushNavBarTitle){
-    console.log(row);
-    // this.props.navigator.push({
-    //   title: pushNavBarTitle+' #'+row.count,
-    //   component: Post,
-    //   passProps: {post: row},
-    //   backButtonTitle: 'Back',
-    //   rightButtonTitle: 'Share',
-    //   onRightButtonPress: () => {
-    //     ActivityView.show({
-    //       text: row.title, 
-    //       url: row.url
-    //     });
-    //   },
-    // });
+  selectRow: function(illust, pushNavBarTitle){
+    console.log(illust);
   },
 
   fetchRankingLogByType: function(ranking_type, page, callback){
     var rowsData = [];
-    fetch("https://api.github.com/repos/upbit/pixivpy/issues?state=closed")
-      .then((response) => response.json())
-      .then((json) => {
-        for (var data of json) {
-          rowsData.push(data);
-        }
-        callback(rowsData);
-      })
-      .done();
+    // api.login("usersp", "passsp", (json) => {
+    //   console.log(json);
+    // });
+
+    api.ranking("daily", (illusts) => {
+      console.log(illusts);
+
+      for (var illust of illusts) {
+        rowsData.push(illust);
+      }
+      callback(rowsData);
+    });
   },
 });
 
 var styles = StyleSheet.create({
-    rowContainer:{
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    rowCount: {
-        fontSize: 20,
-        textAlign: 'right',
-        color: 'gray',
-        margin: 10,
-        marginLeft: 15,
-    },
-    rowDetailsContainer: {
-        flex: 1,
-    },
-    rowTitle: {
-        fontSize: 15,
-        textAlign: 'left',
-        marginTop: 10,
-        marginBottom: 4,
-        marginRight: 10,
-        color: '#FF6600'
-    },
-    rowDetailsLine: {
-        fontSize: 12,
-        marginBottom: 10,
-        color: 'gray',
-    },
     listview: {
-      marginBottom:49
-    },
-    separator: {
-        height: 1,
-        backgroundColor: '#CCCCCC'
-    } 
+      marginBottom:0
+    }
 });
