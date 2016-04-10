@@ -1,7 +1,7 @@
 'use strict';
 
 var auth = {
-  access_token: '6idnbNhaxI4YzFbabp9f0OKaoXSXMllg6FO4p8haYVs',
+  access_token: "mnJU4BPRWJYtI5A71ZH1xy3GuNLz-OZYI7kQirHULyk"
 };
 
 // From: https://github.com/sindresorhus/query-string/blob/master/license
@@ -87,11 +87,11 @@ var fetch_url = function(method, url, headers={}, params=null, data=null, callba
 
 };
 
-exports.ranking = function(mode, callback) {
+exports.ranking = function(mode, page, callback) {
   fetch_url('get', `https://public-api.secure.pixiv.net/v1/ranking/illust.json`, {},
     {
       'mode': mode,
-      'page': 1,
+      'page': page,
       'per_page': 50,
       'include_stats': true,
       'include_sanity_level': true,

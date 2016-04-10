@@ -5,6 +5,7 @@ var React = require('react-native');
 var {
   Text,
   View,
+  Image,
   StyleSheet,
   TouchableHighlight,
 } = React;
@@ -15,9 +16,9 @@ var api = require("../network/api");
 var RefreshableListView = require('./RefreshableListView');
 
 module.exports = React.createClass({
-  getInitialState: function(){
+  getInitialState: function() {
     return {
-      lastType: null
+      illusts: [],
     };
   },
 
@@ -26,50 +27,36 @@ module.exports = React.createClass({
       <RefreshableListView
           renderRow={(row)=>this.renderListViewRow(row, 'daily')}
           onRefresh={(page, callback)=>this.listViewOnRefresh('daily', page, callback)}
-          backgroundColor={'#F6F6EF'}
-          style={styles.listview}/>
+          backgroundColor={'#F6F6EF'}/>
     );
   },
 
-  renderListViewRow: function(illust, pushNavBarTitle){
+  renderListViewRow: function(illust, pushNavBarTitle) {
+    let work = illust.work;
     return(
       <TouchableHighlight underlayColor={'#f3f3f2'} onPress={()=>this.selectRow(illust, pushNavBarTitle)}>
-        <Text>{illust.work.title}</Text>
+        <Image source={{uri: work.image_urls.px_128x128}}
+          style={{width: 128, height: 128}} />
       </TouchableHighlight>
     );
   },
-  listViewOnRefresh: function(ranking_type, page, callback) {
-    if ((this.state.lastType == ranking_type) && (page != 1)) {
-      console.log("down page=" + page);
-    } else {
-      console.log("page=" + page);
-      this.fetchRankingLogByType(ranking_type, page, callback);
-    }
-    this.setState({lastType: ranking_type});
+
+  listViewOnRefresh: function(mode, page, callback) {
+    this.fetchRankingLogByType(mode, page, callback);
   },
+
   selectRow: function(illust, pushNavBarTitle){
     console.log(illust);
   },
 
-  fetchRankingLogByType: function(ranking_type, page, callback){
-    var rowsData = [];
-    // api.login("usersp", "passsp", (json) => {
-    //   console.log(json);
-    // });
+  fetchRankingLogByType: function(mode, page, callback){
+    // api.login("usersp", "passsp", (response) => { console.log(response); });
 
-    api.ranking("daily", (illusts) => {
-      console.log(illusts);
-
-      for (var illust of illusts) {
-        rowsData.push(illust);
-      }
-      callback(rowsData);
+    api.ranking(mode, page, (response) => {
+      console.log(response);
+      const new_illusts = response;
+      this.setState({illusts: new_illusts});
+      callback(new_illusts);
     });
   },
-});
-
-var styles = StyleSheet.create({
-    listview: {
-      marginBottom:0
-    }
 });

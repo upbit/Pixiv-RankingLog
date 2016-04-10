@@ -68,6 +68,10 @@ module.exports = React.createClass({
                                     colors: ['#F6F6EF'],
                                     progressBackgroundColor: '#FF6600',
                                 }}
+                                contentContainerStyle={{
+                                    flexDirection: 'row',
+                                    flexWrap: 'wrap',
+                                }}
                                 customStyles={{
                                                 refreshableView: {
                                                     backgroundColor: this.state.backgroundColor,
