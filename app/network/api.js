@@ -1,7 +1,7 @@
 'use strict';
 
 var auth = {
-  access_token: "mnJU4BPRWJYtI5A71ZH1xy3GuNLz-OZYI7kQirHULyk"
+  access_token: "7yCKitUOCF2p9tAzIN8XOXwYep3QJIBbvxaya1KcxFg"
 };
 
 // From: https://github.com/sindresorhus/query-string/blob/master/license

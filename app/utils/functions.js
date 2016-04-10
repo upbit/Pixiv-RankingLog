@@ -1,4 +1,13 @@
-var Dimensions = require('Dimensions');
+'use strict';
 
-exports.SCREEN_WIDTH = Dimensions.get('window').width;
-exports.SCREEN_HEIGHT = Dimensions.get('window').height;
+var React = require('react-native');
+
+var {
+  Dimensions,
+  PixelRatio,
+} = React;
+
+var {height, width} = Dimensions.get('window');
+
+exports.SCREEN_WIDTH = width;
+exports.SCREEN_HEIGHT = height;

@@ -3,34 +3,23 @@
 var React = require('react-native');
 
 var {
-  Text,
-  View,
-  StyleSheet,
+  Image,
+  TouchableHighlight,
 } = React;
 
 var css = require("./CommonStyles");
-var utils = require("../utils/functions");
 
 module.exports = React.createClass({
 
   render: function() {
-    var illust = this.props.illust;
-
-    return (
-      <View style={[styles.container, css.row]}>
-      
-      </View>
+    const work = this.props.illust.work;
+    const max_width = this.props.max_width;
+    return(
+      <TouchableHighlight underlayColor={'#f3f3f2'} onPress={()=>this.props.onSelected(this.props.illust)}>
+        <Image source={{uri: work.image_urls.px_128x128}}
+          style={{width: max_width, height: max_width}} />
+      </TouchableHighlight>
     );
-  }
-});
+  },
 
-var styles = StyleSheet.create({
-  container: {
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  background: {
-    flex: 1,
-    borderRadius: 4,
-  },
 });
