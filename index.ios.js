@@ -12,7 +12,7 @@ var Discover = require('./app/views/Discover.js');
 class PixivRankingLog extends Component {
   render() {
     return (
-       <NavigatorIOS
+      <NavigatorIOS
         style={styles.container}
         tintColor='#FF6600'
         initialRoute={{

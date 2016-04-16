@@ -6,12 +6,13 @@ var {
   Text,
   View,
   Image,
+  ActivityIndicatorIOS,
   StyleSheet,
-  AsyncStorage,
 } = React;
 
-var api = require("../network/api");
+var PixivAPI = require("../network/pixiv_api");
 var utils = require('../utils/functions');
+var css = require("./CommonStyles");
 
 var RefreshableListView = require('./RefreshableListView');
 var Illust = require('./Illust');
@@ -19,18 +20,36 @@ var Illust = require('./Illust');
 module.exports = React.createClass({
   getInitialState: function() {
     return {
+      api: null,
+      isLogin: false,
       columnNumber: 2,
-      illusts: [],
     };
   },
 
+  componentDidMount() {
+    if (this.state.api == null) {
+      this.state.api = new PixivAPI();
+      this.state.api.login_if_needed("usersp", "passsp", (auth) => {
+        this.setState({isLogin: true});
+      });
+    }
+  },
+
   render: function() {
-    return(
+    if (this.state.isLogin == false) {
+      return (
+        <View style={[css.row, css.center, {height: utils.SCREEN_HEIGHT}]}>
+          <ActivityIndicatorIOS />
+        </View>
+      );
+    }
+
+    return (
       <RefreshableListView
           renderRow={(row)=>this.renderListViewRow(row, 'daily')}
           onRefresh={(page, callback)=>this.listViewOnRefresh('daily', page, callback)}
           backgroundColor={'#F6F6EF'}
-          loadMoreText={'Loading...'}/>
+          loadMoreText={'加载更多'}/>
     );
   },
 
@@ -43,48 +62,11 @@ module.exports = React.createClass({
   },
 
   listViewOnRefresh: function(mode, page, callback) {
-    this.fetchRankingLogByType(mode, page, callback);
-  },
-
-  login: function(username, password) {
-    api.login(username, password, (response) => {
-      let auth = response;
-      auth.date = new Date();
-      AsyncStorage.setItem('pixiv_auth', JSON.stringify(auth), () => {
-        console.log(`Set auth to AsyncStorage, access_token=${auth.access_token}`);
-      });
-      return auth;
+    console.log(`Fetch ${mode} page=${page}...`);
+    this.state.api.ranking(mode, page, (new_illusts) => {
+      // console.log(new_illusts);
+      callback(new_illusts);
     });
-  },
-
-  fetchRankingLogByType: function(mode, page, callback) {
-    AsyncStorage.getItem('pixiv_auth')
-      .then((response) => {
-        if (!response) {
-          this.login("usersp", "passsp");
-        } else {
-          // check storage
-          let auth = JSON.parse(response);
-          let expire_ts = new Date(auth.date).getTime() + auth.expires_in * 1000;
-          let now_ts = new Date().getTime();
-
-          if (now_ts > expire_ts) {
-            return this.login("usersp", "passsp");
-          } else {
-            console.log(`Get auth from AsyncStorage, access_token=${auth.access_token}`);
-            return auth;
-          }
-        }
-      })
-      .then((auth) => {
-        api.ranking(mode, page, (response) => {
-          console.log(response);
-          const new_illusts = response;
-          this.setState({illusts: new_illusts});
-          callback(new_illusts);
-        });
-      });
-
   },
 
   selectRow: function(illust) {
