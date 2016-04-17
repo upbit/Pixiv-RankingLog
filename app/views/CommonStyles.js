@@ -20,4 +20,8 @@ module.exports = StyleSheet.create({
   transparent: {
     backgroundColor: 'transparent',
   },
+  separator: {
+    height: 1,
+    backgroundColor: '#CCCCCC',
+  },
 });

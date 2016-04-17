@@ -21,7 +21,7 @@ class PixivAPI {
   }
 
   // fetch url with pixiv auth headers
-  _http_call(method, url, headers={}, params=null, data=null, callback=null) {
+  _http_call(method, url, headers={}, params=null, data=null) {
     if (!this.auth.hasOwnProperty('access_token')) {
       console.error("Authorization needed!");
       return this.auth;
@@ -44,20 +44,17 @@ class PixivAPI {
     }
 
     if (response) {
-      response.then((response) => response.json())
+      return response.then((response) => response.json())
         .then((json) => {
-          callback(json);
-        })
-        .catch((error) => {
-          console.warn(error);
+          return json;
         });
     } else {
-      console.error(`Failed fetch(method=${method}, url=${url}), unsupported request`)
+      console.error(`Failed fetch(method=${method}, url=${url}), unsupported request`);
     }
   };
 
   // Password login
-  login(username, password, callback) {
+  login(username, password) {
     const params = {
       'client_id': 'bYGKuGVw91e0NMfPGp44euvGt59s',
       'client_secret': 'HP3RmkgAmEGro0gn1x9ioawQE8WMfvLXDz3ZqxpK',
@@ -66,7 +63,7 @@ class PixivAPI {
       'password': password,
     };
 
-    fetch('https://oauth.secure.pixiv.net/auth/token', {
+    return fetch('https://oauth.secure.pixiv.net/auth/token', {
         method: 'POST',
         headers: {
           'Referer': 'http://www.pixiv.net/',
@@ -78,27 +75,24 @@ class PixivAPI {
       .then((json) => {
         if (json.has_error) {
           console.error(json.errors.system);
-        } else {
-          this.auth = json.response;
-          this.auth.date = new Date();
-          AsyncStorage.setItem('pixiv_auth', JSON.stringify(this.auth), () => {
-            console.log(`Set auth to AsyncStorage, access_token=${this.auth.access_token}`);
-          });
-
-          callback(json.response);
+          return json.errors.system;
         }
-      })
-      .catch((error) => {
-        console.warn(error);
+
+        this.auth = json.response;
+        this.auth.date = new Date();
+        AsyncStorage.setItem('pixiv_auth', JSON.stringify(this.auth), () => {
+          console.log(`Set '${this.auth.user.name}' auth to AsyncStorage, access_token=${this.auth.access_token}`);
+        });
+        return this.auth;
       });
   };
 
   // storage auth in AsyncStorage, so only call real login if needed
-  login_if_needed(username, password, callback) {
-    AsyncStorage.getItem('pixiv_auth')
+  login_if_needed(username, password) {
+    return AsyncStorage.getItem('pixiv_auth')
       .then((response) => {
         if (!response) {
-          this.login(username, password, callback);
+          return this.login(username, password);
         } else {
           // check storage
           let auth = JSON.parse(response);
@@ -106,32 +100,35 @@ class PixivAPI {
           let now_ts = new Date().getTime();
 
           if (now_ts > expire_ts) {
-            this.login(username, password, callback);
+            return this.login(username, password);
           } else {
             this.auth = auth;
-            console.log(`Get auth from AsyncStorage, access_token=${this.auth.access_token}`);
-            callback(this.auth);
+            console.log(`Get '${this.auth.user.name}' auth from AsyncStorage, access_token=${this.auth.access_token}`);
+            return this.auth;
           }
         }
       });
   };
 
   // get ranking illusts
-  ranking(mode, page, callback) {
-    this._http_call('get', `https://public-api.secure.pixiv.net/v1/ranking/illust.json`, {},
-      {
-        'mode': mode,
-        'page': page,
-        'per_page': 50,
-        'include_stats': true,
-        'include_sanity_level': true,
-        'image_sizes': 'px_128x128,px_480mw,large',
-        'profile_image_sizes': 'px_170x170,px_50x50',
-      }, null, (json) => {
+  ranking(mode, page) {
+    return this._http_call('get', `https://public-api.secure.pixiv.net/v1/ranking/illust.json`, {},
+        {
+          'mode': mode,
+          'page': page,
+          'per_page': 50,
+          'include_stats': true,
+          'include_sanity_level': true,
+          'image_sizes': 'px_128x128,px_480mw,large',
+          'profile_image_sizes': 'px_170x170,px_50x50',
+        },
+        null
+      ).then((json) => {
         if (json.status != 'success') {
           console.error(json);
+          return json.error;
         }
-        callback(json.response[0].works);
+        return json.response[0].works;
       })
   };
 
