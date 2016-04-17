@@ -8,9 +8,9 @@ import React, {
 } from 'react-native';
 
 var NavigationBar = require('react-native-navbar');
-var Icon = require('react-native-vector-icons/FontAwesome');
 
 var Discover = require('./app/views/Discover');
+var IconButton = require('./app/views/IconButton');
 
 class PixivRankingLog extends Component {
   render() {
@@ -19,9 +19,8 @@ class PixivRankingLog extends Component {
         <NavigationBar
             title={{title: "RankingLog"}}
             leftButton={
-              <TouchableOpacity onPress={() => alert('Bulbazaaaavr!')}>
-                <Icon name="ion-gear-a" size={24} />
-              </TouchableOpacity>
+              <IconButton name="gear" color="#666"
+                onPress={() => alert("Configure!")} />
             }
           />
         <Discover />

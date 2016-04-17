@@ -75,18 +75,18 @@ module.exports = React.createClass({
   },
 
   renderRow(illust) {
-    const columnNumber = 4;
+    const columnNumber = 3;
     return (
       <Illust illust={illust}
-          max_width={(utils.SCREEN_WIDTH-8) / columnNumber}
+          max_width={(utils.SCREEN_WIDTH-2) / columnNumber}
           onSelected={(illust) => this.selectRow(illust)} />
     );
   },
 
   renderSectionHeader: function(sectionData, sectionID) {
     return (
-      <View style={styles.section}>
-        <Text style={styles.sectionText}>{sectionID}</Text>
+      <View style={{width: utils.SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#EEE',}}>
+        <Text style={{color: '#DA552F', fontWeight: 'bold'}}>{sectionID}</Text>
       </View>
       )
   },
@@ -127,14 +127,3 @@ module.exports = React.createClass({
   },
 
 });
-
-var styles = StyleSheet.create({
-  section: {
-    alignItems: 'center',
-    backgroundColor: '#F0F0F0',
-  },
-  sectionText: {
-    color: '#DA552F',
-    fontWeight: 'bold'
-  }
-})
