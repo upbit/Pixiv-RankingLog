@@ -10,10 +10,9 @@ var {
   StyleSheet,
 } = React;
 
-var PixivAPI = require("../network/pixiv_api");
 var utils = require('../utils/functions');
 var css = require("./CommonStyles");
-
+var PixivAPI = require("../network/pixiv_api");
 var RefreshableListView = require('./RefreshableListView');
 var Illust = require('./Illust');
 

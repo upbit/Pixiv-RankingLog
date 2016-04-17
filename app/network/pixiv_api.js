@@ -8,7 +8,7 @@ class PixivAPI {
   }
 
   // From: https://github.com/sindresorhus/query-string/blob/master/license
-  toQueryString(obj) {
+  _toQueryString(obj) {
     return obj ? Object.keys(obj).sort().map(function (key) {
       var val = obj[key];
       if (Array.isArray(val)) {
@@ -20,6 +20,43 @@ class PixivAPI {
     }).join('&') : '';
   }
 
+  // fetch url with pixiv auth headers
+  _http_call(method, url, headers={}, params=null, data=null, callback=null) {
+    if (!this.auth.hasOwnProperty('access_token')) {
+      console.error("Authorization needed!");
+      return this.auth;
+    }
+
+    const merged_headers = {...headers, ...{
+      'Authorization': `Bearer ${this.auth.access_token}`,
+      'Referer': 'http://spapi.pixiv.net/',
+      'User-Agent': 'PixivIOSApp/5.8.3',
+    }}
+
+    let response = null;
+    if (method == 'get') {
+      const params_string = this._toQueryString(params);
+      if (params_string.length > 0) {
+        response = fetch(url+'?'+params_string, {method: 'get', headers: merged_headers})
+      } else {
+        response = fetch(url, {method: 'get', headers: merged_headers})
+      }
+    }
+
+    if (response) {
+      response.then((response) => response.json())
+        .then((json) => {
+          callback(json);
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+    } else {
+      console.error(`Failed fetch(method=${method}, url=${url}), unsupported request`)
+    }
+  };
+
+  // Password login
   login(username, password, callback) {
     const params = {
       'client_id': 'bYGKuGVw91e0NMfPGp44euvGt59s',
@@ -35,7 +72,7 @@ class PixivAPI {
           'Referer': 'http://www.pixiv.net/',
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: this.toQueryString(params),
+        body: this._toQueryString(params),
       })
       .then((response) => response.json())
       .then((json) => {
@@ -56,6 +93,7 @@ class PixivAPI {
       });
   };
 
+  // storage auth in AsyncStorage, so only call real login if needed
   login_if_needed(username, password, callback) {
     AsyncStorage.getItem('pixiv_auth')
       .then((response) => {
@@ -78,41 +116,7 @@ class PixivAPI {
       });
   };
 
-  _http_call(method, url, headers={}, params=null, data=null, callback=null) {
-    if (!this.auth.hasOwnProperty('access_token')) {
-      console.error("Authorization needed!");
-      return this.auth;
-    }
-
-    const merged_headers = {...headers, ...{
-      'Authorization': `Bearer ${this.auth.access_token}`,
-      'Referer': 'http://spapi.pixiv.net/',
-      'User-Agent': 'PixivIOSApp/5.8.3',
-    }}
-
-    let response = null;
-    if (method == 'get') {
-      const params_string = this.toQueryString(params);
-      if (params_string.length > 0) {
-        response = fetch(url+'?'+params_string, {method: 'get', headers: merged_headers})
-      } else {
-        response = fetch(url, {method: 'get', headers: merged_headers})
-      }
-    }
-
-    if (response) {
-      response.then((response) => response.json())
-        .then((json) => {
-          callback(json);
-        })
-        .catch((error) => {
-          console.warn(error);
-        });
-    } else {
-      console.error(`Failed fetch(method=${method}, url=${url}), unsupported request`)
-    }
-  };
-
+  // get ranking illusts
   ranking(mode, page, callback) {
     this._http_call('get', `https://public-api.secure.pixiv.net/v1/ranking/illust.json`, {},
       {
