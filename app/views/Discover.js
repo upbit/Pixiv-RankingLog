@@ -5,11 +5,9 @@ var React = require('react-native');
 var {
   Text,
   View,
-  Image,
   ListView,
   ActivityIndicatorIOS,
   RecyclerViewBackedScrollView,
-  TouchableHighlight,
   StyleSheet,
 } = React;
 
@@ -23,8 +21,10 @@ module.exports = React.createClass({
     return {
       api: null,
       isLogin: false,
+      // ranking states
       mode: 'daily',
       page: 0,
+      // dataSource
       isLoaded: true,
       dataBlob: {},
       dataSource: new ListView.DataSource({
@@ -36,10 +36,12 @@ module.exports = React.createClass({
 
   componentDidMount() {
     if (this.state.api == null) {
+      // Init api and login
       this.state.api = new PixivAPI();
       this.state.api.login_if_needed("usersp", "passsp")
         .then((auth) => {
           this.setState({isLogin: true});
+          // fetch default rankings
           this.fetch_rankings(true);
         });
     }
@@ -57,29 +59,28 @@ module.exports = React.createClass({
     return (
       <ListView
           dataSource={this.state.dataSource}
+          pageSize={50}
           renderRow={this.renderRow}
           renderSectionHeader={this.renderSectionHeader}
-          // renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
           onEndReached={() => {this.fetch_rankings(false)}}
           onEndReachedThreshold={50}
+          // make ListView as GridView
+          contentContainerStyle={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+          }}
+          renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
         />
     );
   },
 
   renderRow(illust) {
-    const columnNumber = 2;
+    const columnNumber = 4;
     return (
-      <TouchableHighlight
-          underlayColor={'#f3f3f2'}
-          onPress={()=>this.selectRow(illust.work)}>
-        <Text>Illust {illust.work.title}</Text>
-      </TouchableHighlight>
+      <Illust illust={illust}
+          max_width={(utils.SCREEN_WIDTH-8) / columnNumber}
+          onSelected={(illust) => this.selectRow(illust)} />
     );
-    // return (
-    //   <Illust illust={illust}
-    //       max_width={(utils.SCREEN_WIDTH-8) / columnNumber}
-    //       onSelected={(illust) => this.selectRow(illust)} />
-    // );
   },
 
   renderSectionHeader: function(sectionData, sectionID) {
@@ -101,18 +102,19 @@ module.exports = React.createClass({
     } else {
       this.setState({page: this.state.page+1, isLoaded: false});
     }
-
     console.log(`Fetch ${this.state.mode} page=${this.state.page}...`);
 
+    // real fetch pixiv rankings
     this.state.api.ranking(this.state.mode, this.state.page)
       .then((illusts) => {
+        // storage result with section title key
         const sectionID = `Page${this.state.page}`;
         var newDs = this.state.dataBlob;
         newDs[sectionID] = illusts;
         this.setState({dataBlob: newDs});
       })
       .then(() => {
-        console.log(this.state.dataBlob);
+        // console.log(this.state.dataBlob);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRowsAndSections(this.state.dataBlob),
           isLoaded: true,

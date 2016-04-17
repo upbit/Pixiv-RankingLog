@@ -3,31 +3,31 @@
 import React, {
   AppRegistry,
   Component,
-  StyleSheet,
-  NavigatorIOS,
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
-var Discover = require('./app/views/Discover.js');
+var NavigationBar = require('react-native-navbar');
+var Icon = require('react-native-vector-icons/FontAwesome');
+
+var Discover = require('./app/views/Discover');
 
 class PixivRankingLog extends Component {
   render() {
     return (
-      <NavigatorIOS
-        style={styles.container}
-        tintColor='#FF6600'
-        initialRoute={{
-          title: 'RankingLog',
-          component: Discover,
-        }}/>
+      <View style={{flex: 1}}>
+        <NavigationBar
+            title={{title: "RankingLog"}}
+            leftButton={
+              <TouchableOpacity onPress={() => alert('Bulbazaaaavr!')}>
+                <Icon name="ion-gear-a" size={24} />
+              </TouchableOpacity>
+            }
+          />
+        <Discover />
+      </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F6F6EF',
-  },
-});
 
 AppRegistry.registerComponent('PixivRankingLog', () => PixivRankingLog);
