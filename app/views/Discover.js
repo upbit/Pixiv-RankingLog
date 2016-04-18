@@ -17,7 +17,7 @@ var PixivAPI = require("../network/pixiv_api");
 var Illust = require('./Illust');
 
 module.exports = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return {
       api: null,
       isLogin: false,
@@ -63,7 +63,6 @@ module.exports = React.createClass({
           renderRow={this.renderRow}
           renderSectionHeader={this.renderSectionHeader}
           onEndReached={() => {this.fetch_rankings(false)}}
-          onEndReachedThreshold={50}
           // make ListView as GridView
           contentContainerStyle={{
             flexDirection: 'row',
@@ -78,14 +77,14 @@ module.exports = React.createClass({
     const columnNumber = 3;
     return (
       <Illust illust={illust}
-          max_width={(utils.SCREEN_WIDTH-2) / columnNumber}
+          max_width={(utils.SCREEN_WIDTH-1) / columnNumber}
           onSelected={(illust) => this.selectRow(illust)} />
     );
   },
 
   renderSectionHeader: function(sectionData, sectionID) {
     return (
-      <View style={{width: utils.SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#EEE',}}>
+      <View style={{width: utils.SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#336774'}}>
         <Text style={{color: '#DA552F', fontWeight: 'bold'}}>{sectionID}</Text>
       </View>
       )
@@ -122,7 +121,7 @@ module.exports = React.createClass({
       });
   },
 
-  selectRow: function(illust) {
+  selectRow(illust) {
     console.log(illust);
   },
 
