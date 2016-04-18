@@ -41,8 +41,7 @@ module.exports = React.createClass({
       this.state.api.login_if_needed("usersp", "passsp")
         .then((auth) => {
           this.setState({isLogin: true});
-          // fetch default rankings
-          this.fetch_rankings(true);
+          this.fetch_rankings(true);        // fetch default rankings
         });
     }
   },
@@ -50,8 +49,9 @@ module.exports = React.createClass({
   render() {
     if (this.state.isLogin == false) {
       return (
-        <View style={[css.row, css.center, {height: utils.SCREEN_HEIGHT}]}>
-          <ActivityIndicatorIOS />
+        <View style={[css.column, css.center, {width: utils.SCREEN_WIDTH}]}>
+          <ActivityIndicatorIOS style={{marginTop: 8, marginBottom: 8}}/>
+          <Text>Login to Pixiv...</Text>
         </View>
       );
     }
