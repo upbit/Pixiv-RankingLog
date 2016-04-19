@@ -45,11 +45,12 @@ var RANKING_MODES = [
 
 module.exports = React.createClass({
   getInitialState() {
+    const now = new Date();
     return {
       username: null,
       password: null,
       mode: 'daily',
-      date: new Date(),
+      date: now.toLocaleDateString().replace(/\//g, '-'),
     };
   },
 
@@ -61,8 +62,7 @@ module.exports = React.createClass({
     const setting_string = await AsyncStorage.getItem('settings');
     if (setting_string !== null){
       var last_state = JSON.parse(setting_string);
-      last_state.date = new Date(last_state.date);
-      console.log(`Get settings from AsyncStorage, mode=${last_state.mode} date=${last_state.date.toLocaleDateString()}`);
+      console.log(`Get settings from AsyncStorage, mode=${last_state.mode} date=${last_state.date}`);
       this.setState(last_state);
     }
   },
@@ -71,12 +71,13 @@ module.exports = React.createClass({
     if (props.visible == false) {
       // onClose, sync state to AsyncStorage
       AsyncStorage.setItem('settings', JSON.stringify(this.state), () => {
-        console.log(`Save settings to AsyncStorage, mode=${this.state.mode} date=${this.state.date.toLocaleDateString()}`);
+        console.log(`Save settings to AsyncStorage, mode=${this.state.mode} date=${this.state.date}`);
       });
     }
   },
 
   render() {
+    const obj_date = new Date(this.state.date);
     return (
       <Modal
         animated={true}
@@ -107,7 +108,7 @@ module.exports = React.createClass({
           </WithLabel>
 
           <WithLabel label="Mode:">
-            <Text>{this.state.type}</Text>
+            <Text>{this.state.mode}</Text>
           </WithLabel>
           <Picker
             style={{width: utils.SCREEN_WIDTH}}
@@ -119,13 +120,13 @@ module.exports = React.createClass({
           </Picker>
 
           <WithLabel label="Date:">
-            <Text>{this.state.date.toLocaleDateString()}</Text>
+            <Text>{this.state.date}</Text>
           </WithLabel>
           <DatePickerIOS
             style={{width: utils.SCREEN_WIDTH}}
-            date={this.state.date}
+            date={obj_date}
             mode="date"
-            onDateChange={(date) => this.setState({ date: date })} />
+            onDateChange={(date) => this.setState({ date: date.toLocaleDateString().replace(/\//g, '-') })} />
 
           <FontAwesome.Button name="check" size={20}
             color="#000000"

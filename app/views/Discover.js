@@ -19,6 +19,7 @@ var Illust = require('./Illust');
 
 module.exports = React.createClass({
   getInitialState() {
+    const now = new Date();
     return {
       api: null,
       isLogin: false,
@@ -27,7 +28,7 @@ module.exports = React.createClass({
         username: null,
         password: null,
         mode: 'daily',
-        date: new Date(),
+        date: now.toLocaleDateString().replace(/\//g, '-'),
       },
       page: 0,
       // dataSource
@@ -41,7 +42,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    this.loadSettings()
+    this.reloadSettings()
       .then(() => {
         if (this.state.api == null) {
           // Init api and login
@@ -55,11 +56,10 @@ module.exports = React.createClass({
       });
   },
 
-  async loadSettings() {
+  async reloadSettings() {
     const setting_string = await AsyncStorage.getItem('settings');
     if (setting_string !== null){
       var setting_state = JSON.parse(setting_string);
-      setting_state.date = new Date(setting_state.date);
       this.setState({settings: setting_state});
     }
   },
