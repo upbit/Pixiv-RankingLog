@@ -18,7 +18,7 @@ console.ignoredYellowBox = [ 'Warning: Failed propType' ];
 module.exports = React.createClass({
   getInitialState() {
     return {
-      settingVisible: true,
+      settingVisible: false,
     };
   },
 
@@ -46,6 +46,7 @@ module.exports = React.createClass({
           onClose={() => this._setSettingVisible(false)}
         />
 
+        <Discover />
       </View>
     );
   },
