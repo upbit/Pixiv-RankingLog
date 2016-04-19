@@ -8,9 +8,9 @@ P站过去排行扫图专用App - Pixiv RankingLog (react-native)
   * [x] 完成Pixiv基础API
   * [x] 完成Ranking ListView布局
   * [x] 增加Auth本地存储
-  * [ ] 完成单张图片的详情页布局
+  * [ ] 提供设置界面
   * [ ] 增加历史排行的爬取逻辑
-  * [ ] 支持选择榜单类型
+  * [ ] 完成单张图片的详情页布局
   * [ ] 支持获取收藏列表
   * [ ] 增加写API，新增/删除收藏
 
