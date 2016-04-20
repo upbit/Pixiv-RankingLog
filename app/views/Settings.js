@@ -9,7 +9,6 @@ var {
   TextInput,
   Picker,
   DatePickerIOS,
-  AsyncStorage,
   StyleSheet,
 } = React;
 
@@ -17,6 +16,7 @@ var FontAwesome = require('react-native-vector-icons/FontAwesome');
 
 var utils = require('../utils/functions');
 var css = require("./CommonStyles");
+var GlobalStore = require('../GlobalStore');
 
 var WithLabel = React.createClass({
   render() {
@@ -55,24 +55,16 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    this._loadInitialState().done();
-  },
-
-  async _loadInitialState() {
-    const setting_string = await AsyncStorage.getItem('settings');
-    if (setting_string !== null){
-      var last_state = JSON.parse(setting_string);
-      console.log(`Get settings from AsyncStorage, mode=${last_state.mode} date=${last_state.date}`);
-      this.setState(last_state);
-    }
+    GlobalStore.reloadSettings()
+      .then(() => {
+        this.setState(GlobalStore.settings);
+      });
   },
 
   componentWillReceiveProps: function(props) {
     if (props.visible == false) {
-      // onClose, sync state to AsyncStorage
-      AsyncStorage.setItem('settings', JSON.stringify(this.state), () => {
-        console.log(`Save settings to AsyncStorage, mode=${this.state.mode} date=${this.state.date}`);
-      });
+      console.log(this.state);
+      GlobalStore.saveSettings(this.state);   // onClose, sync state to AsyncStorage
     }
   },
 
@@ -134,6 +126,14 @@ module.exports = React.createClass({
             onPress={this.props.onClose}
           >
             Save
+          </FontAwesome.Button>
+
+          <FontAwesome.Button name="remove" size={20}
+            color="#FF0000"
+            backgroundColor="#CCCCCC"
+            onPress={() => { GlobalStore.reset() }}
+          >
+            Reset
           </FontAwesome.Button>
         </View>
       </Modal>

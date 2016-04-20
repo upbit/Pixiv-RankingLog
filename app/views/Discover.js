@@ -8,28 +8,18 @@ var {
   ListView,
   ActivityIndicatorIOS,
   RecyclerViewBackedScrollView,
-  AsyncStorage,
-  StyleSheet,
 } = React;
 
 var utils = require('../utils/functions');
 var css = require("./CommonStyles");
-var PixivAPI = require("../network/pixiv_api");
+
+var GlobalStore = require('../GlobalStore');
 var Illust = require('./Illust');
 
 module.exports = React.createClass({
   getInitialState() {
-    const now = new Date();
     return {
-      api: null,
       isLogin: false,
-      // ranking states
-      settings: {
-        username: null,
-        password: null,
-        mode: 'daily',
-        date: now.toLocaleDateString().replace(/\//g, '-'),
-      },
       page: 0,
       // dataSource
       isLoaded: true,
@@ -42,26 +32,14 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    this.reloadSettings()
+    GlobalStore.reloadSettings()
       .then(() => {
-        if (this.state.api == null) {
-          // Init api and login
-          this.state.api = new PixivAPI();
-          this.state.api.login_if_needed(this.state.settings.username, this.state.settings.password)
-            .then((auth) => {
-              this.setState({isLogin: true});
-              this.fetch_rankings(true);        // fetch default rankings
-            });
-        }
+        GlobalStore.api.login_if_needed(GlobalStore.settings.username, GlobalStore.settings.password)
+          .then((auth) => {
+            this.setState({isLogin: true});
+            this.fetch_rankings(true);        // fetch default rankings
+          });
       });
-  },
-
-  async reloadSettings() {
-    const setting_string = await AsyncStorage.getItem('settings');
-    if (setting_string !== null){
-      var setting_state = JSON.parse(setting_string);
-      this.setState({settings: setting_state});
-    }
   },
 
   render() {
@@ -119,10 +97,10 @@ module.exports = React.createClass({
     } else {
       this.setState({page: this.state.page+1, isLoaded: false});
     }
-    console.log(`Fetch ${this.state.settings.mode} page=${this.state.page}...`);
+    console.log(`Fetch ${GlobalStore.settings.mode} page=${this.state.page}...`);
 
     // real fetch pixiv rankings
-    this.state.api.ranking(this.state.settings.mode, this.state.page)
+    GlobalStore.api.ranking(GlobalStore.settings.mode, this.state.page)
       .then((illusts) => {
         // storage result with section title key
         const sectionID = `Page${this.state.page}`;
