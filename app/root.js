@@ -46,7 +46,7 @@ module.exports = React.createClass({
           onClose={() => this._setSettingVisible(false)}
         />
 
-        <Discover />
+        <Discover visible={!this.state.settingVisible}/>
       </View>
     );
   },

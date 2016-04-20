@@ -21,6 +21,7 @@ module.exports = React.createClass({
     return {
       isLogin: false,
       page: 0,
+      last_mode: null,
       // dataSource
       isLoaded: true,
       dataBlob: {},
@@ -37,9 +38,27 @@ module.exports = React.createClass({
         GlobalStore.api.login_if_needed(GlobalStore.settings.username, GlobalStore.settings.password)
           .then((auth) => {
             this.setState({isLogin: true});
-            this.fetch_rankings(true);        // fetch default rankings
+            this.fetch_rankings(true);
           });
       });
+  },
+
+  componentWillReceiveProps(props) {
+    if (this.state.last_mode != null && this.state.last_mode != GlobalStore.settings.mode) {
+      console.log(`Mode ${this.state.last_mode} -> ${GlobalStore.settings.mode}, reset ListView datasource...`);
+      GlobalStore.reloadSettings()
+        .then(() => {
+          this.setState({
+            page: 0,
+            dataBlob: {},
+            dataSource: this.state.dataSource.cloneWithRowsAndSections({})
+          });
+        });
+    }
+  },
+
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return (nextState.isLogin != this.isLogin) || (nextState.dataBlob != this.dataBlob);
   },
 
   render() {
@@ -54,6 +73,7 @@ module.exports = React.createClass({
 
     return (
       <ListView
+          visible={this.props.visible}
           dataSource={this.state.dataSource}
           pageSize={50}
           renderRow={this.renderRow}
@@ -98,7 +118,7 @@ module.exports = React.createClass({
       this.setState({page: this.state.page+1, isLoaded: false});
     }
     console.log(`Fetch ${GlobalStore.settings.mode} page=${this.state.page}...`);
-
+    
     // real fetch pixiv rankings
     GlobalStore.api.ranking(GlobalStore.settings.mode, this.state.page)
       .then((illusts) => {
@@ -106,7 +126,7 @@ module.exports = React.createClass({
         const sectionID = `Page${this.state.page}`;
         var newDs = this.state.dataBlob;
         newDs[sectionID] = illusts;
-        this.setState({dataBlob: newDs});
+        this.setState({dataBlob: newDs, last_mode: GlobalStore.settings.mode});
       })
       .then(() => {
         // console.log(this.state.dataBlob);

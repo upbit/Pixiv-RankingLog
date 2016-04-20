@@ -61,9 +61,8 @@ module.exports = React.createClass({
       });
   },
 
-  componentWillReceiveProps: function(props) {
+  componentWillReceiveProps(props) {
     if (props.visible == false) {
-      console.log(this.state);
       GlobalStore.saveSettings(this.state);   // onClose, sync state to AsyncStorage
     }
   },
