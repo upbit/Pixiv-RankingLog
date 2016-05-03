@@ -2,29 +2,30 @@
 
 var React = require('react-native');
 
-var { ListView, AsyncStorage } = React;
+var { AsyncStorage } = React;
 
 var PixivAPI = require("./network/pixiv_api");
 
 class GlobalStore {
+  initState() {
+    return {
+      currentMode: null,
+      isLoaded: true,
+      dataBlob: {},
+    };
+  }
+
   constructor() {
     const now = new Date();
-    this.api = new PixivAPI();
     this.settings = {
       username: 'usersp',
       password: 'passsp',
       mode: 'daily',
       date: now.toLocaleDateString().replace(/\//g, '-'),
     };
-    this.ds = {
-      current_mode: null,
-      dataBlob: {},
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-      }),
-      isLoaded: true,
-    }
+    // state
+    this.state = this.initState();
+    this.api = new PixivAPI();
   }
 
   async _reloadSettings() {
@@ -32,16 +33,7 @@ class GlobalStore {
     if (setting_string !== null){
       this.settings = JSON.parse(setting_string);
     }
-    // reset ds
-    this.ds = {
-      current_mode: null,
-      dataBlob: {},
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-      }),
-      isLoaded: true,
-    }
+    this.state = this.initState();
   }
 
   reloadSettings() {
@@ -55,37 +47,28 @@ class GlobalStore {
     });
   }
 
-  fetchRankingLog(mode: string, refresh: boolean) {
-    if (this.ds.isLoaded == false) {
+  fetchRankingLog(mode: string, page: number) {
+    if (this.state.isLoaded == false) {
       console.log("Waiting, last fetch is in process...");
       return null;
     }
 
-    var current_page = this.ds.page + 1;
-    if (refresh || mode != this.ds.current_mode) {
-      current_page = 1;
-      this.ds.current_mode = mode;
-    }
-    this.ds.page = current_page;
+    console.log(`Fetch RankingLog(${mode}, page=${page})...`);
+    // this.setState({ currentMode: mode, isLoaded: false });
+    this.state.currentMode = mode;
+    this.state.isLoaded = false;
 
-    console.log(`Fetch RankingLog(${this.ds.current_mode}, page=${this.ds.page})...`);
-    
     // real fetch pixiv rankings
-    this.ds.isLoaded = false;
-    GlobalStore.api.ranking(this.ds.current_mode, this.ds.page)
+    return this.api.ranking(mode, page)
       .then((illusts) => {
         // storage result with section title key
-        const sectionID = `${this.ds.current_mode}-Page${this.ds.page}`;
-        var newDs = this.ds.dataBlob;
+        const sectionID = `${mode} page-${page}`;
+        var newDs = this.state.dataBlob;
         newDs[sectionID] = illusts;
-        this.ds.dataBlob = newDs;
-      })
-      .then(() => {
-        // console.log(this.state.dataBlob);
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRowsAndSections(this.state.dataBlob),
-          isLoaded: true,
-        });
+        // this.setState({ isLoaded: true, dataBlob: newDs });
+        this.state.isLoaded = true;
+        this.state.dataBlob = newDs;
+        return illusts;
       });
   }
 

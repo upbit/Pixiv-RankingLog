@@ -21,10 +21,6 @@ module.exports = React.createClass({
     return {
       isLogin: false,
       page: 0,
-      last_mode: null,
-      // dataSource
-      isLoaded: true,
-      dataBlob: {},
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
@@ -38,19 +34,18 @@ module.exports = React.createClass({
         GlobalStore.api.login_if_needed(GlobalStore.settings.username, GlobalStore.settings.password)
           .then((auth) => {
             this.setState({isLogin: true});
-            this.fetch_rankings(true);
+            this.fetch_next_page(true);
           });
       });
   },
 
   componentWillReceiveProps(props) {
-    if (this.state.last_mode != null && this.state.last_mode != GlobalStore.settings.mode) {
-      console.log(`Mode ${this.state.last_mode} -> ${GlobalStore.settings.mode}, reset ListView datasource...`);
+    if (GlobalStore.state.currentMode != null && GlobalStore.state.currentMode != GlobalStore.settings.mode) {
+      console.log(`Mode ${GlobalStore.state.currentMode} -> ${GlobalStore.settings.mode}, reset ListView datasource...`);
       GlobalStore.reloadSettings()
         .then(() => {
           this.setState({
             page: 0,
-            dataBlob: {},
             dataSource: this.state.dataSource.cloneWithRowsAndSections({})
           });
         });
@@ -58,7 +53,7 @@ module.exports = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    return (nextState.isLogin != this.isLogin) || (nextState.dataBlob != this.dataBlob);
+    return (nextState.isLogin != this.isLogin) || (nextState.dataBlob != GlobalStore.state.dataBlob);
   },
 
   render() {
@@ -78,7 +73,7 @@ module.exports = React.createClass({
           pageSize={50}
           renderRow={this.renderRow}
           renderSectionHeader={this.renderSectionHeader}
-          onEndReached={() => {this.fetch_rankings(false)}}
+          onEndReached={() => {this.fetch_next_page(false)}}
           // make ListView as GridView
           contentContainerStyle={{
             flexDirection: 'row',
@@ -106,33 +101,22 @@ module.exports = React.createClass({
       )
   },
 
-  fetch_rankings(refresh: boolean) {
-    if (this.state.isLoaded == false) {
+  fetch_next_page(refresh: boolean) {
+    if (GlobalStore.state.isLoaded == false) {
       console.log("Waiting, last fetch is in process...");
       return;
     }
-
+    var next_page = this.state.page + 1;
     if (refresh) {
-      this.setState({page: 1, isLoaded: false});
-    } else {
-      this.setState({page: this.state.page+1, isLoaded: false});
+      next_page = 1;
     }
-    console.log(`Fetch ${GlobalStore.settings.mode} page=${this.state.page}...`);
-    
-    // real fetch pixiv rankings
-    GlobalStore.api.ranking(GlobalStore.settings.mode, this.state.page)
+
+    GlobalStore.fetchRankingLog(GlobalStore.settings.mode, next_page)
       .then((illusts) => {
-        // storage result with section title key
-        const sectionID = `Page${this.state.page}`;
-        var newDs = this.state.dataBlob;
-        newDs[sectionID] = illusts;
-        this.setState({dataBlob: newDs, last_mode: GlobalStore.settings.mode});
-      })
-      .then(() => {
-        // console.log(this.state.dataBlob);
+        console.log(GlobalStore.state.dataBlob);
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRowsAndSections(this.state.dataBlob),
-          isLoaded: true,
+          page: next_page,
+          dataSource: this.state.dataSource.cloneWithRowsAndSections(GlobalStore.state.dataBlob),
         });
       });
   },
