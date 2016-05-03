@@ -100,8 +100,8 @@ module.exports = React.createClass({
 
   renderSectionHeader: function(sectionData, sectionID) {
     return (
-      <View style={{width: utils.SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#336774'}}>
-        <Text style={{color: '#DA552F', fontWeight: 'bold'}}>{sectionID}</Text>
+      <View style={{width: utils.SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#CCCCCC'}}>
+        <Text style={{color: '#86473F', fontWeight: 'bold'}}>{sectionID}</Text>
       </View>
       )
   },
