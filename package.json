@@ -6,9 +6,12 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "react": "^0.14.8",
-    "react-native": "^0.24.1",
-    "react-native-navbar": "~1.4.2",
-    "react-native-vector-icons": "~1.3.4"
+    "react": "15.0.2",
+    "react-native": "0.26.3",
+    "react-native-navbar": "~1.5.0",
+    "react-native-vector-icons": "~2.0.3"
+  },
+  "devDependencies": {
+    "rnpm-plugin-upgrade": "^0.26.0"
   }
 }

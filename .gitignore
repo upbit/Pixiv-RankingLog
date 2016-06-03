@@ -1,3 +1,7 @@
+# OSX
+#
+.DS_Store
+
 # Xcode
 #
 build/
@@ -16,22 +20,21 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+project.xcworkspace
 
-# CocoaPods
+# Android/IJ
 #
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
-#
-# Pods/
+.idea
+.gradle
+local.properties
 
-# react-native
+# node.js
+#
 node_modules/
-#node_modules/.bin/
-#node_modules/react-native/
-#node_modules/react-native-eximage/SDWebImage/
 npm-debug.log
 
-# user file
-RankingLogHelper.psd
-
+# BUCK
+buck-out/
+\.buckd/
+android/app/libs
+android/keystores/debug.keystore
