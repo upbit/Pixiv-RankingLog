@@ -75,7 +75,7 @@ export default class Settings extends Component {
     const obj_date = new Date(this.state.date);
     return (
       <Modal
-        animated={true}
+        animationType='slide'
         transparent={true}
         visible={this.props.visible}
         onRequestClose={this.props.onClose}
