@@ -1,8 +1,10 @@
 'use strict';
 
-var React = require('react-native');
+import React, {
+  Component,
+} from 'react';
 
-var {
+import {
   Modal,
   View,
   Text,
@@ -10,15 +12,15 @@ var {
   Picker,
   DatePickerIOS,
   StyleSheet,
-} = React;
+} from 'react-native';
 
-var FontAwesome = require('react-native-vector-icons/FontAwesome');
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 var utils = require('../utils/functions');
 var css = require("./CommonStyles");
 var GlobalStore = require('../GlobalStore');
 
-var WithLabel = React.createClass({
+class WithLabel extends Component {
   render() {
     return (
       <View style={[css.row, css.center]}>
@@ -29,7 +31,7 @@ var WithLabel = React.createClass({
       </View>
     );
   }
-});
+}
 
 var RANKING_MODES = [
   'daily',
@@ -43,29 +45,31 @@ var RANKING_MODES = [
   'r18g',
 ];
 
-module.exports = React.createClass({
-  getInitialState() {
+export default class Settings extends Component {
+  constructor(props) {
+    super(props);
+
     const now = new Date();
-    return {
+    this.state = {
       username: null,
       password: null,
       mode: 'daily',
       date: now.toLocaleDateString().replace(/\//g, '-'),
     };
-  },
+  }
 
   componentDidMount() {
     GlobalStore.reloadSettings()
       .then(() => {
         this.setState(GlobalStore.settings);
       });
-  },
+  }
 
   componentWillReceiveProps(props) {
     if (props.visible == false) {
       GlobalStore.saveSettings(this.state);   // onClose, sync state to AsyncStorage
     }
-  },
+  }
 
   render() {
     const obj_date = new Date(this.state.date);
@@ -137,24 +141,8 @@ module.exports = React.createClass({
         </View>
       </Modal>
     );
-  },
-
-});
-
-var WithLabel = React.createClass({
-  render: function() {
-    return (
-      <View style={styles.labelContainer}>
-        <View style={styles.labelView}>
-          <Text style={styles.label}>
-            {this.props.label}
-          </Text>
-        </View>
-        {this.props.children}
-      </View>
-    );
   }
-});
+}
 
 var styles = StyleSheet.create({
   textinput: {

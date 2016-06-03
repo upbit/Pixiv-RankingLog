@@ -1,30 +1,33 @@
 'use strict';
 
-var React = require('react-native');
+import React, {
+  Component,
+} from 'react';
 
-var {
+import {
   View,
   Text,
-} = React;
+} from 'react-native';
 
-var NavigationBar = require('react-native-navbar');
-var FontAwesome = require('react-native-vector-icons/FontAwesome');
+import NavigationBar from 'react-native-navbar';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-var Discover = require('./views/Discover');
-var Settings = require('./views/Settings');
+import Discover from './views/Discover';
+import Settings from './views/Settings';
 
 console.ignoredYellowBox = [ 'Warning: Failed propType' ];
 
-module.exports = React.createClass({
-  getInitialState() {
-    return {
+export default class Root extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       settingVisible: false,
     };
-  },
+  }
 
   _setSettingVisible(visible) {
     this.setState({settingVisible: visible});
-  },
+  }
 
   render() {
     return(
@@ -49,6 +52,5 @@ module.exports = React.createClass({
         <Discover visible={!this.state.settingVisible}/>
       </View>
     );
-  },
-
-});
+  }
+}

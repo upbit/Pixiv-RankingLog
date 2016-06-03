@@ -1,24 +1,27 @@
 'use strict';
 
-var React = require('react-native');
+import React, {
+  Component,
+} from 'react';
 
-var {
+import {
   Text,
   View,
   ListView,
   ActivityIndicatorIOS,
   RecyclerViewBackedScrollView,
-} = React;
+} from 'react-native';
 
 var utils = require('../utils/functions');
 var css = require("./CommonStyles");
 
 var GlobalStore = require('../GlobalStore');
-var Illust = require('./Illust');
+import Illust from './Illust';
 
-module.exports = React.createClass({
-  getInitialState() {
-    return {
+export default class Discover extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       isLogin: false,
       page: 0,
       dataSource: new ListView.DataSource({
@@ -26,7 +29,7 @@ module.exports = React.createClass({
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       }),
     };
-  },
+  }
 
   componentDidMount() {
     GlobalStore.reloadSettings()
@@ -37,7 +40,7 @@ module.exports = React.createClass({
             this.fetch_next_page(true);
           });
       });
-  },
+  }
 
   componentWillReceiveProps(props) {
     if (GlobalStore.state.currentMode != null && GlobalStore.state.currentMode != GlobalStore.settings.mode) {
@@ -50,11 +53,11 @@ module.exports = React.createClass({
           });
         });
     }
-  },
+  }
 
-  shouldComponentUpdate: function(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return (nextState.isLogin != this.isLogin) || (nextState.dataBlob != GlobalStore.state.dataBlob);
-  },
+  }
 
   render() {
     if (this.state.isLogin == false) {
@@ -82,7 +85,7 @@ module.exports = React.createClass({
           renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
         />
     );
-  },
+  }
 
   renderRow(illust) {
     const columnNumber = 3;
@@ -91,15 +94,15 @@ module.exports = React.createClass({
           max_width={(utils.SCREEN_WIDTH-1) / columnNumber}
           onSelected={(illust) => this.selectRow(illust)} />
     );
-  },
+  }
 
-  renderSectionHeader: function(sectionData, sectionID) {
+  renderSectionHeader(sectionData, sectionID) {
     return (
       <View style={{width: utils.SCREEN_WIDTH, alignItems: 'center', backgroundColor: '#CCCCCC'}}>
         <Text style={{color: '#86473F', fontWeight: 'bold'}}>{sectionID}</Text>
       </View>
       )
-  },
+  }
 
   fetch_next_page(refresh: boolean) {
     if (GlobalStore.state.isLoaded == false) {
@@ -119,10 +122,9 @@ module.exports = React.createClass({
           dataSource: this.state.dataSource.cloneWithRowsAndSections(GlobalStore.state.dataBlob),
         });
       });
-  },
+  }
 
   selectRow(illust) {
     console.log(illust);
-  },
-
-});
+  }
+}

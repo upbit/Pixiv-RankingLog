@@ -5,6 +5,6 @@ import React, {
   Component,
 } from 'react-native';
 
-var Root = require('./app/Root');
+import Root from './app/Root';
 
 AppRegistry.registerComponent('PixivRankingLog', () => Root);

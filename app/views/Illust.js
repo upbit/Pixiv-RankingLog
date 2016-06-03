@@ -1,17 +1,18 @@
 'use strict';
 
-var React = require('react-native');
+import React, {
+  Component,
+} from 'react';
 
-var {
+import {
   Image,
   TouchableHighlight,
-} = React;
+} from 'react-native';
 
-var css = require("./CommonStyles");
+// var css = require("./CommonStyles");
 
-module.exports = React.createClass({
-
-  render: function() {
+export default class Illust extends Component {
+  render() {
     const work = this.props.illust.work;
     const max_width = this.props.max_width;
     return(
@@ -20,6 +21,5 @@ module.exports = React.createClass({
           style={{width: max_width, height: max_width}} />
       </TouchableHighlight>
     );
-  },
-
-});
+  }
+}

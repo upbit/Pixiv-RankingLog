@@ -1,8 +1,8 @@
 'use strict';
 
-var React = require('react-native');
-
-var { AsyncStorage } = React;
+import {
+  AsyncStorage
+} from 'react-native';
 
 var PixivAPI = require("./network/pixiv_api");
 
